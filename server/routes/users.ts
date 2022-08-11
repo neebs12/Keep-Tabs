@@ -10,10 +10,19 @@ router.get('/', async (_req, res) => {
   res.json(users)
 })
 
-router.post('/seed', (_req, res) => {
+router.post('/', async (req, res) => {
   // this  route adds new users from the users table
+  // no validation yet -- needs to be validated!
+  // consider a User type
+  const {username, passwordHash} = req.body 
   
-  res.send('POST api/users/seed to be completed')
+  let newUser = new userModel({
+    username, passwordHash
+  })
+
+  newUser = await newUser.save() 
+
+  res.json(newUser)
 })
 
 

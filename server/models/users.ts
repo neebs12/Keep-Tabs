@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import config from '../utils/config'
 
 const userSchema = new mongoose.Schema({
-  userName: String, 
+  username: String, 
   passwordHash: String
 })
 
