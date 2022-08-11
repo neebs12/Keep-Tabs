@@ -2,6 +2,7 @@
 >Todo application written in MERN stack under TypeScript. 
 
 **Learning goals involve:** 
+- Increased proficiency in version control (git)
 - Increased proficiency in TypeScript
 - Increased proficiency in NoSQL databases (mongoose & MongoDB)
 - Basic HTTP Authentication with JWT as Bearer tokens
