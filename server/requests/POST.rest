@@ -1,0 +1,8 @@
+### POST requests
+POST http://localhost:8080/api/users/seed
+Content-Type: application/json
+
+{
+  "username": "gerald",
+  "passwordHash": "I like xero"
+}
