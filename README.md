@@ -15,5 +15,6 @@ ___
 - Authentication (facilitated by first principles)
 - Add/Update/Delete Todos
 ___
-## Todo
-- Add more...
+## Inspirations
+- https://timemanagementninja.com/2017/04/12-top-features-for-the-perfect-todo-app/
+- https://zapier.com/blog/best-todo-list-apps/#todoist
