@@ -1,5 +1,5 @@
 import express from 'express'
-const path = require('path')
+import path from 'path'
 
 const server = express()
 
@@ -10,6 +10,4 @@ server.get('/hello', (_req, res) => {
   res.send(`Hello, World! ${process.env.PASSWORD}`)
 })
 
-module.exports = server
-
-export {}
+export default server

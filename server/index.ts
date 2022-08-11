@@ -1,5 +1,5 @@
-require('dotenv').config()
-const server = require('./server')
+import 'dotenv/config'
+import server from './server'
 
 const PORT = process.env.PORT || 3000
 
