@@ -24,9 +24,10 @@ router.post('/', async (_req, res) => {
   const hashedPasswords = (await Promise.allSettled(seedData.seedUsers.map(u => {
     return bcrypt.hash(u.password, saltRounds)
   })))
-    .filter(p => p.status === 'fulfilled')
-    .map(p => p as PromiseFulfilledResult<string>)
-    .map(p => p.value) // omg
+    // this is for checking, typecasting, for .value extraction for TS
+    // inspiration: https://stackoverflow.com/questions/63783735/type-error-on-response-of-promise-allsettled
+    .filter(p => p.status === 'fulfilled')          
+    .map(p => (p as PromiseFulfilledResult<string>).value)
 
   if (hashedPasswords.length !== seedData.seedUsers.length) {
     throw new Error('Unable to correctly plant all users, not all passwords has been hashed!')

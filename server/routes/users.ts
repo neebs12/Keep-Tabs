@@ -1,11 +1,11 @@
 import express from 'express'
 import UserModel from '../models/users'
-// import config from '../utils/config'
+import config from '../utils/config'
 import bcrypt from 'bcrypt'
-// import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const router = express.Router()
-// const SECRET = config.SECRET
+const SECRET = config.SECRET
 
 router.get('/', async (_req, res) => {
   // this route fetches all the users from the users table
@@ -33,8 +33,30 @@ router.post('/signup', async (req, res) => {
   res.status(201).json(newUser)
 })
 
+// 1. Extract crendentials from the req.body - {username, password(plaintext)}
+// 2. See if the user exists in the database given username via (UserModel.findOne)
+// -- -- error if not (user not found)
+// 3. Compare the pass(plaintext) with the existing hash via (bcrypt.compare)
+// -- -- error if not (incorrect password)
+// 4. Create a token via (jwt.sign, payload is username, can use timed tokens) 
+// 5. Send back the token
 router.post('/login', async (req, res) => {
-  res.send(`${req.path} is yet to be implemented`)
+  const {username, password} = req.body
+  const user = await UserModel.findOne({ username })
+  if (!user) { // is null
+    res.status(404).json({error: 'user not found'})
+    return
+  }
+
+  const result = await bcrypt.compare(password, user.passwordHash)
+
+  if (!result) { // is false
+    res.status(404).json({error: 'incorrect password'})
+    return
+  }
+
+  const token = await jwt.sign({username}, SECRET)
+  res.json({ token })
 })
 
 
