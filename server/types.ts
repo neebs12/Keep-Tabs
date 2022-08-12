@@ -8,12 +8,12 @@ export enum ENVS {
 export type VALID_ENVS = ENVS | void
 
 // User types
-export interface NewUser {
+export interface User {
   username: string,
   passwordHash: string // caution
 }
 
-export interface User extends NewUser {
+export interface DatabaseUser extends User {
   _id: string
 }
 

@@ -1,9 +1,16 @@
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
+import {Schema, model} from 'mongoose'
+import { Todo } from '../types'
 
-const todoSchema = new mongoose.Schema({
-  title: String, 
-  description: String,
-  userId: String
+// Steps to create a schema in mongoose
+// 1. Create a TS interface representing a document in MongoDB
+// 2. Create a Schema according to the Interface
+// 3. Create a model
+
+const todoSchema = new Schema<Todo>({
+  title: {type: String, required: true}, 
+  description: {type: String, required: true},
+  userId: {type: String, required: true}
 })
 
 todoSchema.set('toJSON', {
@@ -19,6 +26,6 @@ todoSchema.set('toJSON', {
 // small note: this governs collection name
 // --> where mongoDB assigns name as plural-ised & lowercased version
 // --> eg. 'Todo' appears as 'todos'
-const Todo = mongoose.model('Todo', todoSchema)
+const ModelTodo = model<Todo>('Todo', todoSchema)
 
-export default Todo
+export default ModelTodo

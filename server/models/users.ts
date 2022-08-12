@@ -1,7 +1,9 @@
-import mongoose from "mongoose"
+import {Schema, model} from "mongoose"
 import config from '../utils/config'
 
-const userSchema = new mongoose.Schema({
+import { User } from "../types"
+
+const userSchema = new Schema<User>({
   username: String, 
   passwordHash: String
 })
@@ -21,6 +23,6 @@ userSchema.set('toJSON', {
   }
 })
 
-const User = mongoose.model('User', userSchema)
+const UserModel = model<User>('User', userSchema)
 
-export default User
+export default UserModel

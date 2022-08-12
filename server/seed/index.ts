@@ -1,9 +1,9 @@
 import { 
-  NewUser,
+  User,
   UnassignedTodo 
 } from '../types'
 
-const seedUsers: NewUser[] = [
+const seedUsers: User[] = [
   {
     username: "jason",
     passwordHash: "flower"
