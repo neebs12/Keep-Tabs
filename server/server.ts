@@ -24,7 +24,7 @@ server.use(express.json())
 server.use(express.static(path.join(__dirname, 'public')))
 
 server.get('/hello', (_req, res) => {
-  res.send(`Hello, World! ${config.PASSWORD}`)
+  res.send(`Hello, World! ${config.SECRET}`)
 })
 
 server.use('/api', requestLogger)

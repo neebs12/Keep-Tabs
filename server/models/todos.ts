@@ -10,7 +10,8 @@ import { Todo } from '../types'
 const todoSchema = new Schema<Todo>({
   title: {type: String, required: true}, 
   description: {type: String, required: true},
-  userId: {type: String, required: true}
+  userId: {type: String, required: true},
+  completed: {type: Boolean, required: true, default: false}
 })
 
 todoSchema.set('toJSON', {

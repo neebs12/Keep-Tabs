@@ -1,36 +1,51 @@
 import express from 'express'
+import bcrypt from 'bcrypt'
 import userModel from '../models/users' 
 import todoModel from '../models/todos'
 // <-- add more with further development
 
-import { UnassignedTodo, Todo } from '../types'
+import { User, SeedTodo, Todo } from '../types'
 
 import seedData from '../seed'
 
 const router = express.Router()
 
 router.post('/', async (_req, res) => {
-  // here, we clear all the entries from the database
-  // then populate it with information that we choose to populate it with for testing
-  // with seedData, we will assume that it contains
-  /*
-  {
-    users: [{}, {}, {}, ...],
-    todos: [{}, {}, ...]
-  }
-  */
-  // then once we have added the users, we will pair the todos with the users accordingly. Better if done in a predictable way. So assume that 1st user will get 3 todos, 2nd will get one todo, and the 3rd will get no todo
+  // 1. Clear all entries from test-database
+  // 2. Get the users from seed database the users (unhashed)
+  // 3. Hash the passwords of the users from the database (hashed)
+  // 4. Assign the todos to users 
+  // 5. Insert the todos
+
   await userModel.deleteMany({})
   await todoModel.deleteMany({})
-  const DBusers = await userModel.insertMany(seedData.seedUsers)
+
+  const saltRounds = 10
+  const hashedPasswords = (await Promise.allSettled(seedData.seedUsers.map(u => {
+    return bcrypt.hash(u.password, saltRounds)
+  })))
+    .filter(p => p.status === 'fulfilled')
+    .map(p => p as PromiseFulfilledResult<string>)
+    .map(p => p.value) // omg
+
+  if (hashedPasswords.length !== seedData.seedUsers.length) {
+    throw new Error('Unable to correctly plant all users, not all passwords has been hashed!')
+  }
+
+  const newUsers: User[] = seedData.seedUsers.map((u, ind) => {
+    return {username: u.username, passwordHash: hashedPasswords[ind]}
+  })
+
+  const DBusers = await userModel.insertMany(newUsers)
   // based on the users, we can then assign new todos
   // note that these users will have new ._id property
   const ids = DBusers.map((u): string => u._id.toString())
 
-  const sendTodos = seedData.seedTodos.map((s: UnassignedTodo): Todo => {
+  const sendTodos = seedData.seedTodos.map((s: SeedTodo): Todo => {
     return {
       ...s,
-      userId: getRandAryElm<string>(ids) // <- valid due to gnr fn. nature
+      userId: getRandAryElm<string>(ids), // <- valid due to gnr fn. nature
+      completed: false
     }
   })
 
@@ -44,6 +59,6 @@ router.post('/', async (_req, res) => {
 
 export default router
 
-function getRandAryElm<Type>(arry: Type[]): Type | undefined {
+function getRandAryElm<Type>(arry: Type[]): Type {
   return arry[Math.floor(Math.random()*arry.length)]
 }

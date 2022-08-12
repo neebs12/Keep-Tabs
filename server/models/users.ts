@@ -4,8 +4,8 @@ import config from '../utils/config'
 import { User } from "../types"
 
 const userSchema = new Schema<User>({
-  username: String, 
-  passwordHash: String
+  username: {type: String, unique: true, required: true}, 
+  passwordHash: {type: String, required: true}
 })
 
 userSchema.set('toJSON', {

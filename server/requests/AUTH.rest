@@ -1,0 +1,8 @@
+### POST: user test - username: admin, password: pasta123
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "pasta123"
+}
