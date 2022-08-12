@@ -1,3 +1,4 @@
+// ENV types
 export enum ENVS {
   dev = 'dev'
   //  <-- add as more envs come online
@@ -6,7 +7,25 @@ export enum ENVS {
 // can be undefined (where it could be missing)
 export type VALID_ENVS = ENVS | void
 
-export interface User {
+// User types
+export interface NewUser {
   username: string,
-  passwordHash: string // dangerous
+  passwordHash: string // caution
 }
+
+export interface User extends NewUser {
+  _id: string
+}
+
+// Todo types
+// when first adding a Todo (possible exclusive to seed data only)
+export interface UnassignedTodo {
+  title: string,
+  description: string, 
+}
+
+// when attaching a Todo to a user
+export type Todo = UnassignedTodo | { userId: string }
+
+// when attaining a Todo from the database
+export type DatabaseTodo = Todo | { _id: string }
