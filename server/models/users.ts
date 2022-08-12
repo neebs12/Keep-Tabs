@@ -16,7 +16,7 @@ userSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
 
-    returnedObject._id = _id
+    returnedObject.id = _id
     if (config.ENV !== 'dev') {
       delete returnedObject.passwordHash
     }

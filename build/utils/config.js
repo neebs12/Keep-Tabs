@@ -1,35 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = require("../types");
 // --> see union for Fields and NodeJS.ProcessEnv in order to still properly process a modified process.env object with dotenv package
-const config = ({ MONGODB_URI, PORT, PASSWORD }) => {
+const config = ({ MONGODB_URI, MONGODB_TEST_URI, PORT, SECRET, ENV }) => {
+    if (ENV === 'dev') {
+        MONGODB_URI = parseGeneric(MONGODB_TEST_URI, 'MONGODB_TEST_URI');
+    }
     return {
-        MONGODB_URI: parseMONGODB_URI(MONGODB_URI),
-        PORT: parsePORT(PORT),
-        PASSWORD: parsePASSWORD(PASSWORD)
+        MONGODB_URI: parseGeneric(MONGODB_URI, 'MONGODB_URI'),
+        PORT: parseGeneric(PORT, 'PORT'),
+        SECRET: parseGeneric(SECRET, 'SECRET'),
+        ENV: parseENV(ENV)
     };
 };
-const parseMONGODB_URI = (value) => {
+const parseGeneric = (value, descr) => {
     if (!value || !isString(value)) {
-        throw new Error('Environment is missing/has invalid MONGODB_URI');
+        throw new Error(`Environment is missing/has invalid ${descr}`);
     }
     return value;
 };
-const parsePORT = (value) => {
-    if (!value || !isNumber(value)) {
-        throw new Error('Environment is missing/has invalid PORT');
+const parseENV = (value) => {
+    if (value !== undefined && !isENV(value)) {
+        throw new Error(`Environment is missing/has invalid ENV`);
     }
     return value;
 };
-const parsePASSWORD = (value) => {
-    if (!value || !isString(value)) {
-        throw new Error('Environment is missing/has invalid PASSWORD');
+const isENV = (value) => {
+    // so, no longer undefined so can check against enum
+    // so will check against ENVS which is a subset from a union with VALID_ENVS
+    for (const val of Object.values(types_1.ENVS)) {
+        if (val === value) {
+            return true;
+        }
     }
-    return value;
+    return false;
 };
 const isString = (value) => {
     return typeof value === 'string';
-};
-const isNumber = (value) => {
-    return typeof value === 'number';
 };
 exports.default = config(process.env);

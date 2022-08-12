@@ -20,13 +20,13 @@ todoSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
 
-    returnedObject._id = _id    
+    returnedObject.id = _id    
   }
 })
 
 // small note: this governs collection name
 // --> where mongoDB assigns name as plural-ised & lowercased version
 // --> eg. 'Todo' appears as 'todos'
-const ModelTodo = model<Todo>('Todo', todoSchema)
+const TodoModel = model<Todo>('Todo', todoSchema)
 
-export default ModelTodo
+export default TodoModel

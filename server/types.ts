@@ -17,8 +17,8 @@ export interface User extends Omit<SeedUser, 'password'>{
   passwordHash: string 
 }
 
-export interface DatabaseUser extends User {
-  _id: string
+export interface TokenUser extends Omit<User, 'passwordHash'> {
+  id: string
 }
 
 // Todo types
@@ -32,9 +32,4 @@ export interface SeedTodo {
 export interface Todo extends SeedTodo {
   userId: string, 
   completed: boolean
-}
-
-// when attaining a Todo from the database
-export interface DatabaseTodo extends Todo {
-  _id: string
 }

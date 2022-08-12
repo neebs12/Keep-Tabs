@@ -3,6 +3,9 @@ import server from './server'
 import config from './utils/config'
 import logger from './utils/logger'
 
+import _ from './types/express/index' 
+// <--- ts-node-dev wont let us run without this T_T
+
 const PORT = config.PORT
 
 server.listen(PORT, () => {

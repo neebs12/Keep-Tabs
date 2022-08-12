@@ -19,11 +19,9 @@ router.get('/', async (_req, res) => {
 // 4. Create new user in the database (Model.create)
 // 5. Optionally return information to the requester
 router.post('/signup', async (req, res) => {
-  // this  route adds new users from the users table
-  // no validation yet -- needs to be validated! (this decreases coupling)
-  // consider a User type
+  // TODO: Add validation of payload
   const {username, password: plaintextPassword} = req.body 
-  // then based on the password, we want a hash
+  
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(plaintextPassword, saltRounds)
   const newUser = await UserModel.create({
@@ -43,6 +41,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   const {username, password} = req.body
   const user = await UserModel.findOne({ username })
+
   if (!user) { // is null
     res.status(404).json({error: 'user not found'})
     return
@@ -55,7 +54,8 @@ router.post('/login', async (req, res) => {
     return
   }
 
-  const token = await jwt.sign({username}, SECRET)
+  // encrypted to front, ._id is transformed to .id
+  const token = await jwt.sign({ username, id: user._id }, SECRET)
   res.json({ token })
 })
 

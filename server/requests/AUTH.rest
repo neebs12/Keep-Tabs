@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### POST: user test - username: admin, password: pasta123
-### Response: {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjYwMzM2MzM4fQ.UPtPgGmbx2UUk2zXILuUNu020m5UpMsMlQCCa46j5YA"}
+### Response: {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI2MmY2ZTczNDVlM2ZiMDgwZDA3MGZmMjkiLCJpYXQiOjE2NjAzNDgyMjF9.WgvZxJHSIzC7gntgoiZ4RV3-fp41ij9ZdHqURKkexBU"}
 POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### POST: seed user test - username: jason, password: flower
-### Response {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphc29uIiwiaWF0IjoxNjYwMzM2NDgzfQ.-Dicz_G6aCohGYa-1khpNBXN9vOc0cZGn9yOuEEYlCs"}
+### Response {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphc29uIiwiaWQiOiI2MmY2ZTcxNjVlM2ZiMDgwZDA3MGZmMWYiLCJpYXQiOjE2NjAzNDg1NzZ9.MrNHWHYcOp_SJgsKpf849WqN2LOn3Kdg0u6Cy0htOJU"}
 POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
