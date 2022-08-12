@@ -1,0 +1,11 @@
+### POST - seedify the database
+POST http://localhost:8080/api/seed
+
+### POST requests
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "gerald",
+  "passwordHash": "I like xero"
+}
