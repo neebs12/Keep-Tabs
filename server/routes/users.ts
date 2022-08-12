@@ -15,13 +15,10 @@ router.post('/', async (req, res) => {
   // no validation yet -- needs to be validated!
   // consider a User type
   const {username, passwordHash} = req.body 
-  
   let newUser = new userModel({
     username, passwordHash
   })
-
   newUser = await newUser.save() 
-
   res.json(newUser)
 })
 

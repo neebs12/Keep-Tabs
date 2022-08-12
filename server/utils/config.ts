@@ -44,27 +44,6 @@ const parseENV = (value: unknown): VALID_ENVS => {
   return value
 }
 
-// const parseMONGODB_URI = (value: unknown): string => {
-//   if (!value || !isString(value)) {
-//     throw new Error('Environment is missing/has invalid MONGODB_URI')
-//   }
-//   return value
-// }
-
-// const parsePORT = (value: unknown): string => {
-//   if (!value || !isString(value)) {
-//     throw new Error('Environment is missing/has invalid PORT')
-//   }
-//   return value
-// }
-
-// const parsePASSWORD = (value: unknown): string => {
-//   if (!value || !isString(value)) {
-//     throw new Error('Environment is missing/has invalid PASSWORD')
-//   }
-//   return value
-// }
-
 const isENV = (value: any): value is VALID_ENVS => {
   // so, no longer undefined so can check against enum
   // so will check against ENVS which is a subset from a union with VALID_ENVS
