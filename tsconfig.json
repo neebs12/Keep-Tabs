@@ -8,6 +8,13 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "typeRoots": [ 
+      "node_modules/@types",
+      "server/types"
+    ],
+  },
+  "include": [
+    "server/**/*.ts", "server/types/*.ts"
+  ]
 }

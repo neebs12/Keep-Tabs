@@ -1,22 +1,22 @@
-import { ENVS, VALID_ENVS } from '../types'
+import { ENVS, VALID_ENVS } from '../types/custom/types'
 
 interface Fields {
   MONGODB_URI: unknown,
   MONGODB_TEST_URI: unknown,
   PORT: unknown
-  PASSWORD: unknown
+  SECRET: unknown
   ENV: unknown,
 }
 
 interface ProcessEnv { // <-- type here, not in types.ts
   MONGODB_URI: string
   PORT: string
-  PASSWORD: string,
+  SECRET: string,
   ENV: VALID_ENVS
 }
 
 // --> see union for Fields and NodeJS.ProcessEnv in order to still properly process a modified process.env object with dotenv package
-const config = ({MONGODB_URI, MONGODB_TEST_URI, PORT, PASSWORD, ENV}: Fields | NodeJS.ProcessEnv): ProcessEnv => {
+const config = ({MONGODB_URI, MONGODB_TEST_URI, PORT, SECRET, ENV}: Fields | NodeJS.ProcessEnv): ProcessEnv => {
   
   if (ENV === 'dev') {
     MONGODB_URI = parseGeneric(MONGODB_TEST_URI, 'MONGODB_TEST_URI')
@@ -25,7 +25,7 @@ const config = ({MONGODB_URI, MONGODB_TEST_URI, PORT, PASSWORD, ENV}: Fields | N
   return {
     MONGODB_URI: parseGeneric(MONGODB_URI, 'MONGODB_URI'),
     PORT: parseGeneric(PORT, 'PORT'),
-    PASSWORD: parseGeneric(PASSWORD, 'PASSWORD'),
+    SECRET: parseGeneric(SECRET, 'SECRET'),
     ENV: parseENV(ENV)
   }
 }

@@ -1,9 +1,11 @@
-import mongoose from "mongoose"
+import {Schema, model} from "mongoose"
 import config from '../utils/config'
 
-const userSchema = new mongoose.Schema({
-  username: String, 
-  passwordHash: String
+import { User } from "../types/custom/types"
+
+const userSchema = new Schema<User>({
+  username: {type: String, unique: true, required: true}, 
+  passwordHash: {type: String, required: true}
 })
 
 userSchema.set('toJSON', {
@@ -14,13 +16,13 @@ userSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
 
-    returnedObject._id = _id
+    returnedObject.id = _id
     if (config.ENV !== 'dev') {
       delete returnedObject.passwordHash
     }
   }
 })
 
-const User = mongoose.model('User', userSchema)
+const UserModel = model<User>('User', userSchema)
 
-export default User
+export default UserModel

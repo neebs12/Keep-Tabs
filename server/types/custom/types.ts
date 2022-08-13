@@ -8,24 +8,28 @@ export enum ENVS {
 export type VALID_ENVS = ENVS | void
 
 // User types
-export interface NewUser {
-  username: string,
-  passwordHash: string // caution
+export interface SeedUser {
+  username: string, 
+  password: string
 }
 
-export interface User extends NewUser {
-  _id: string
+export interface User extends Omit<SeedUser, 'password'>{
+  id?: string
+  passwordHash: string 
 }
+
+export interface SafeUser extends Omit<User, 'passwordHash'> {}
 
 // Todo types
 // when first adding a Todo (possible exclusive to seed data only)
-export interface UnassignedTodo {
+export interface SeedTodo {
   title: string,
   description: string, 
 }
 
 // when attaching a Todo to a user
-export type Todo = UnassignedTodo | { userId: string }
-
-// when attaining a Todo from the database
-export type DatabaseTodo = Todo | { _id: string }
+export interface Todo extends SeedTodo {
+  id?: string,
+  userId: string, 
+  completed: boolean
+}

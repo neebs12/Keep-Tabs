@@ -1,0 +1,54 @@
+### This will contain a basic user flow: 
+### 0. Seedify
+### 1. A new account is created (signup) - receives confirmation
+### 2. The new account logs in (login) - received jwt
+### 3. Creates a new todo (2x)
+### 4. Gets available todo 
+
+### 0. Seedify
+POST http://localhost:8080/api/seed
+
+### 1. Signup - expected success confirmation 
+### (TODO: handle duplication)
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+
+{
+  "username": "newuser124",
+  "password": "pasta123"
+}
+
+### 2. Login - expected token
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "username": "newuser123",
+  "password": "pasta123"
+}
+
+### 3. Add todo - expect reception of created todo
+POST http://localhost:8080/api/todos
+Authorization: brearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIxMjMiLCJpZCI6IjYyZjcxYmVmNDJiOWM4YmI1YmM0N2Y2OSIsImlhdCI6MTY2MDM2MTgwM30.ggFSl8m4FtDjhDPifoLnMGDCQvcuGysx7kk388p5VcI
+Content-Type: application/json
+
+{
+  "title": "Backend Authentication",
+  "description": "Able to be signup login",
+  "completed": false
+}
+
+### 3(p2). Add todo - expect reception of created todo
+POST http://localhost:8080/api/todos
+Authorization: brearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIxMjMiLCJpZCI6IjYyZjcxYmVmNDJiOWM4YmI1YmM0N2Y2OSIsImlhdCI6MTY2MDM2MTgwM30.ggFSl8m4FtDjhDPifoLnMGDCQvcuGysx7kk388p5VcI
+Content-Type: application/json
+
+{
+  "title": "Front-end Authentication",
+  "description": "Able to see the login page that looks super nice!",
+  "completed": false
+}
+
+### 4. Gets all the created todos
+GET http://localhost:8080/api/todos
+Authorization: brearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIxMjMiLCJpZCI6IjYyZjcxYmVmNDJiOWM4YmI1YmM0N2Y2OSIsImlhdCI6MTY2MDM2MTgwM30.ggFSl8m4FtDjhDPifoLnMGDCQvcuGysx7kk388p5VcI

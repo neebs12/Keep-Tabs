@@ -1,24 +1,24 @@
 import { 
-  NewUser,
-  UnassignedTodo 
-} from '../types'
+  SeedUser,
+  SeedTodo 
+} from '../types/custom/types'
 
-const seedUsers: NewUser[] = [
+const seedUsers: SeedUser[] = [
   {
     username: "jason",
-    passwordHash: "flower"
+    password: "flower"
   },
   {
     username: "jemimah",
-    passwordHash: "sun flower"
+    password: "sun flower"
   },
   {
     username: "isaac",
-    passwordHash: "central america"
+    password: "central america"
   },
 ]
 
-const seedTodos: UnassignedTodo[] = [
+const seedTodos: SeedTodo[] = [
   {
     title: "Clean Bedroom",
     description: "Guests are coming over today! Will need to be presentable"
