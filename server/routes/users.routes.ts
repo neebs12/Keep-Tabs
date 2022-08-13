@@ -21,6 +21,12 @@ router.get('/', async (_req, res) => {
 router.post('/signup', async (req, res) => {
   // TODO: Add validation of payload
   const {username, password: plaintextPassword} = req.body 
+
+  const isExisting = await UserModel.findOne({username})
+  if (isExisting) {
+    res.status(200).json({message: 'username already exists, try again'})
+    return
+  }
   
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(plaintextPassword, saltRounds)
@@ -28,7 +34,7 @@ router.post('/signup', async (req, res) => {
     username, passwordHash
   })
 
-  res.status(201).json(newUser)
+  res.status(201).json({id: newUser.id, username: newUser.username})
 })
 
 // 1. Extract crendentials from the req.body - {username, password(plaintext)}

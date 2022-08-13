@@ -6,7 +6,7 @@ import todoModel from '../models/todos.model'
 
 import { User, SeedTodo, Todo } from '../types/custom/types'
 
-import seedData from '../seed/seed.data'
+import seedData from '../data/seed.data'
 
 const router = express.Router()
 
