@@ -1,7 +1,7 @@
 import { 
   SeedUser,
   SeedTodo 
-} from '../types'
+} from '../types/custom/types'
 
 const seedUsers: SeedUser[] = [
   {

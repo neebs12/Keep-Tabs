@@ -1,12 +1,12 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
-import userModel from '../models/users' 
-import todoModel from '../models/todos'
+import userModel from '../models/users.model' 
+import todoModel from '../models/todos.model'
 // <-- add more with further development
 
-import { User, SeedTodo, Todo } from '../types'
+import { User, SeedTodo, Todo } from '../types/custom/types'
 
-import seedData from '../seed'
+import seedData from '../seed/seed.data'
 
 const router = express.Router()
 

@@ -1,9 +1,9 @@
-import { TokenUser } from '../../types'
+import { SafeUser } from '../custom/types'
 
 declare global {
   namespace Express {
     interface Request {
-      user: TokenUser
+      user: SafeUser
     }
   }
 }

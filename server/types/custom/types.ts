@@ -14,12 +14,11 @@ export interface SeedUser {
 }
 
 export interface User extends Omit<SeedUser, 'password'>{
+  id?: string
   passwordHash: string 
 }
 
-export interface TokenUser extends Omit<User, 'passwordHash'> {
-  id: string
-}
+export interface SafeUser extends Omit<User, 'passwordHash'> {}
 
 // Todo types
 // when first adding a Todo (possible exclusive to seed data only)
@@ -30,6 +29,7 @@ export interface SeedTodo {
 
 // when attaching a Todo to a user
 export interface Todo extends SeedTodo {
+  id?: string,
   userId: string, 
   completed: boolean
 }

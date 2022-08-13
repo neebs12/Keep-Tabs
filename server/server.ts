@@ -2,9 +2,9 @@ import express from 'express'
 import path from 'path'
 import mongoose from 'mongoose'
 
-import usersRoute from './routes/users'
-import todosRoute from './routes/todos'
-import seedRoute from './routes/seed'
+import usersRoute from './routes/users.routes'
+import todosRoute from './routes/todos.routes'
+import seedRoute from './routes/seed.routes'
 
 import config from './utils/config'
 import logger from './utils/logger'

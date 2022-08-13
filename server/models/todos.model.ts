@@ -1,6 +1,6 @@
 // import mongoose from 'mongoose'
 import {Schema, model} from 'mongoose'
-import { Todo } from '../types'
+import { Todo } from '../types/custom/types'
 
 // Steps to create a schema in mongoose
 // 1. Create a TS interface representing a document in MongoDB

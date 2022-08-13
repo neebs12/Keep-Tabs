@@ -1,4 +1,4 @@
-import { ENVS, VALID_ENVS } from '../types'
+import { ENVS, VALID_ENVS } from '../types/custom/types'
 
 interface Fields {
   MONGODB_URI: unknown,

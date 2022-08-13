@@ -2,8 +2,8 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 
 import config from './config'
-import UserModel from '../models/users'
-import { TokenUser } from '../types'
+import UserModel from '../models/users.model'
+import { SafeUser } from '../types/custom/types'
 
 import logger from "./logger"
 
@@ -48,7 +48,7 @@ const userExtractor = async (req: express.Request, _res: express.Response, next:
 
   req.user = {
     username: user.username, id: user._id.toString()
-  } as TokenUser
+  } as SafeUser
 
   next()
 }
