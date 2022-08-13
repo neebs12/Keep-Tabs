@@ -1,35 +1,24 @@
-import React, { useState } from 'react'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+
+import Test from './Test'
+import Home from './Home/Home.index'
+import Main from './Main/Main.index'
+import Login from './Login/Login.index'
 
 function App () {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-
-  const onClickLogin = () => {
-    console.log('Clicked Login')
-  }
 
   return (
     <>
       <header className="header">
         <h1>Welcome to Application</h1>
       </header>
-      <TextField 
-        placeholder='username'
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <TextField 
-        placeholder='password'
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <Button 
-        variant='outlined'
-        onClick={onClickLogin}
-      >Log in</Button>
-      <Button variant='outlined'>Register</Button>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/main" element={<Main />} />
+        <Route path="/test" element={<Test />}/>
+      </Routes>
     </>
   )
 }
