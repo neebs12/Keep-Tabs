@@ -9,7 +9,6 @@
 POST http://localhost:8080/api/seed
 
 ### 1. Signup - expected success confirmation 
-### (TODO: handle duplication)
 POST http://localhost:8080/api/users/signup
 Content-Type: application/json
 
