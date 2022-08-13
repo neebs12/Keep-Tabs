@@ -4,7 +4,7 @@ function App () {
   return (
     <>
       <header className="header">
-        <h1>My Collection - Typescript</h1>
+        <h1>My Collection - Typescript, Compiled form TS</h1>
       </header>
       <section className="main">
         {/* add your code here */}
