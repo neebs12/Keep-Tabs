@@ -55,6 +55,11 @@ const Login = () => {
     makeTimeoutMessage(mySeverity as AlertColor, myMessage)
   }
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('triggering submission')
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       {/* 
@@ -73,7 +78,7 @@ const Login = () => {
         {/* so is HTML h2 but is h5 in appearance */}
         <Typography variant='h5' component='h2'>Login Page</Typography>
         {/* transforms in to a form HTML component */}
-        <Box component='form' onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}> 
+        <Box component='form' onSubmit={onSubmit}> 
           <TextField 
             margin='dense' // typical if you want 'decent space'
             required // applies `*` on the form label
