@@ -42,8 +42,8 @@ const userExtractor = async (req: express.Request, _res: express.Response, next:
   const user = await UserModel.findById(id)
   if (!user) {
     throw new Error('User not found!')
-    next()
-    return
+    // next()
+    // return
   }
 
   req.user = {

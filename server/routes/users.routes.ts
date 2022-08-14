@@ -4,6 +4,8 @@ import config from '../utils/config'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import { SafeUser } from '../types/custom/types'
+
 const router = express.Router()
 const SECRET = config.SECRET
 
@@ -61,9 +63,37 @@ router.post('/login', async (req, res) => {
   }
 
   // encrypted to front, ._id is transformed to .id
-  const token = await jwt.sign({ username, id: user._id }, SECRET)
+  const token = await jwt.sign({ username, id: user.id } as SafeUser, SECRET)
+  
+  // cookie sent first, then send the actual response (this is the correct order!)
+  res.cookie('token', 'Bearer ' + token)
   res.json({ token })
 })
 
+router.post('/validate', async (req, res) => {
+  // req.cookie will contain the cookie from the front end, need to validate
+  if (!req.cookies.token) {
+    res.status(404).json({error: 'no cookie found'})
+    return
+  }
+
+  // format 'Bearer <token>', then is split
+  const [_, encodedToken] = (req.cookies.token as string).split(' ')
+  
+  const decodedToken = jwt.verify(encodedToken, config.SECRET) as SafeUser
+  const isExisting = await UserModel.findOne({...decodedToken})
+  if (!isExisting) {
+    res.status(404).json({error: 'user not found from cookie'})
+    return
+  }
+
+  // otherwise, does exists and send SafeUser back to the server.
+  res.status(200).json({...decodedToken})
+})
+
+router.post('/logout', async (_req, res) => {
+  res.clearCookie('token')
+  res.status(200).json({success: 'cookie cleared'})
+})
 
 export default router

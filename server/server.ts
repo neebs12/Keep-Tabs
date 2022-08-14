@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 
 import usersRoute from './routes/users.routes'
 import todosRoute from './routes/todos.routes'
@@ -21,6 +22,7 @@ mongoose.connect(config.MONGODB_URI)
 
 const server = express()
 
+server.use(cookieParser())
 server.use(express.json())
 server.use(express.static(path.join(__dirname, 'public')))
 
@@ -37,5 +39,14 @@ if (config.ENV === 'dev') {
   server.use('/api/seed', seedRoute)
 }
 
+// --> this is for invalid requests not related to apis
+server.use('/api', (_req, res) => {
+  res.status(404).json({error: 'invalid api call'})
+})
+// TODO: Implement unknown endpoint flow
+server.use('*', (_req, res) => {
+  // redirection to '/'
+  res.redirect('/')
+})
 
 export default server
