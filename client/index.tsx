@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 // import { Provider } from 'react-redux'
 // import { createStore, applyMiddleware, compose } from 'redux'
 // import thunk from 'redux-thunk'
@@ -16,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //   document.getElementById('app')
   // )
   ReactDOM.createRoot(document.getElementById('app')).render(
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   )
 })

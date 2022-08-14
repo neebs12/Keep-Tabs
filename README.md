@@ -6,6 +6,7 @@
 - Increased proficiency in TypeScript
 - Increased proficiency in NoSQL databases (mongoose & MongoDB)
 - Basic HTTP Authentication with JWT as Bearer tokens
+- Backend and Frontend Cookie handling
 - Webpack (esp. with TS)
 - State management with Redux Toolkit
 - Material UI
