@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
 
 import usersRoute from './routes/users.routes'
 import todosRoute from './routes/todos.routes'
@@ -21,6 +22,7 @@ mongoose.connect(config.MONGODB_URI)
 
 const server = express()
 
+server.use(cookieParser())
 server.use(express.json())
 server.use(express.static(path.join(__dirname, 'public')))
 

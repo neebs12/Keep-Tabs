@@ -18,6 +18,7 @@ export interface User extends Omit<SeedUser, 'password'>{
   passwordHash: string 
 }
 
+// is .id, .username
 export interface SafeUser extends Omit<User, 'passwordHash'> {}
 
 // Todo types
