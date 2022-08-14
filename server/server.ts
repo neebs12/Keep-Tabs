@@ -39,8 +39,14 @@ if (config.ENV === 'dev') {
   server.use('/api/seed', seedRoute)
 }
 
-// server.use
 // --> this is for invalid requests not related to apis
-// server.use('*')
+server.use('/api', (_req, res) => {
+  res.status(404).json({error: 'invalid api call'})
+})
+// TODO: Implement unknown endpoint flow
+server.use('*', (_req, res) => {
+  // redirection to '/'
+  res.redirect('/')
+})
 
 export default server
