@@ -64,10 +64,10 @@ router.post('/login', async (req, res) => {
 
   // encrypted to front, ._id is transformed to .id
   const token = await jwt.sign({ username, id: user.id } as SafeUser, SECRET)
-  res
-    .json({ token })
-    .cookie('token', 'Bearer ' + token)
-  // should create a cookie, and stored in the front-end
+  
+  // cookie sent first, then send the actual response (this is the correct order!)
+  res.cookie('token', 'Bearer ' + token)
+  res.json({ token })
 })
 
 router.post('/validate', async (req, res) => {
@@ -89,6 +89,11 @@ router.post('/validate', async (req, res) => {
 
   // otherwise, does exists and send SafeUser back to the server.
   res.status(200).json({...decodedToken})
+})
+
+router.post('/logout', async (_req, res) => {
+  res.clearCookie('token')
+  res.status(200).json({success: 'cookie cleared'})
 })
 
 export default router

@@ -39,5 +39,8 @@ if (config.ENV === 'dev') {
   server.use('/api/seed', seedRoute)
 }
 
+// server.use
+// --> this is for invalid requests not related to apis
+// server.use('*')
 
 export default server

@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import { useAppDispatch } from '../../hooks'
+
+import { addUser } from '../../features/session/sessionSlice'
+import { SessionState } from '../../features/session/sessionSlice'
+
+import { validateUser } from '../../apis/user.api'
 
 const Home = () => {
   // think cookies (from client) and this dictating which page we are navigated to
@@ -19,9 +24,20 @@ const Home = () => {
     - Dispatch the username to the redux store
     - Redirect to the main page (where the main page will use AppSelector to get username to display what we want)
   */
+
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   useEffect(() => {
-    navigate('/login') // <-- in the future will be in conditional (cookies)
+    validateUser()
+      .then(response => {
+        if (typeof response === 'string') {
+          navigate('/login')
+          return
+        }
+        // response information to store and redirect to main page
+        dispatch(addUser(response as SessionState))
+        navigate('/main')
+      })
   }, [])
   return (<h1>This is the home page</h1>)
 }

@@ -44,7 +44,8 @@ const Login = () => {
     } else {
       myMessage = `successful login ${username}`
       mySeverity = 'success'
-      navigate('/main')
+      // navigate('/main')
+      navigate('/') // <--- navigate to home to handle user flow
     }
 
     // "success" | "info" | "warning" | "error"
