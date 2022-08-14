@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Alert, AlertColor, Button, TextField } from '@mui/material'
+import { Container } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
-// import { useAppDispatch, useAppSelector } from '../../hooks'
 import { loginUser } from '../../apis/user.api'
 
 // types
@@ -44,38 +47,79 @@ const Login = () => {
     } else {
       myMessage = `successful login ${username}`
       mySeverity = 'success'
-      // navigate('/main')
-      navigate('/') // <--- navigate to home to handle user flow
+      navigate('/') 
+      // <--- navigates to home, handles user flow and redux store
     }
 
     // "success" | "info" | "warning" | "error"
     makeTimeoutMessage(mySeverity as AlertColor, myMessage)
   }
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('triggering submission')
+  }
+
   return (
-    <div id='login-page'>
-      <h1>Login Page</h1>
-      <TextField 
-        placeholder='username'
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <TextField 
-        placeholder='password'
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <Button 
-        variant='outlined'
-        onClick={onClickLogin}
-        disabled={!username || !password} // empty field check
-      >Log in</Button>
-      <Button 
-        variant='outlined'
-        onClick={() => navigate('/register')}
-      >Register</Button>
-      {message && <Alert severity={messageSeverity}>{message}</Alert>}
-    </div>
+    <Container component="main" maxWidth="xs">
+      {/* 
+      - Container so that everything is horizontally centered
+      - Is the main component
+      - Will have maxWidth of extra small "xs" to ensure fluidity (?)
+      */}
+      <Box
+        sx={{
+          mt: 5, // margin top to the top factor. True px is determined by mt constant at theme
+          display: 'flex', // <-- sets display
+          flexDirection: 'column', // <--- aligns vertically, but takes up all hor space
+          alignItems: 'center' // <--- compresses horizontally
+        }}
+      >
+        {/* so is HTML h2 but is h5 in appearance */}
+        <Typography variant='h5' component='h2'>Login Page</Typography>
+        {/* transforms in to a form HTML component */}
+        <Box component='form' onSubmit={onSubmit}> 
+          <TextField 
+            margin='dense' // typical if you want 'decent space'
+            required // applies `*` on the form label
+            fullWidth // taked up horizontal space, think, overrides `aignItems` clause of larger box
+            id='username' // for screen readers
+            label='Enter: Username' // what apears
+            name='username' // for form submission (but we use controlled components anyway :/)
+            value={username} 
+            onChange={e => setUsername(e.target.value)}
+          />
+          <TextField 
+            margin='dense'
+            required
+            fullWidth
+            id='password'
+            type='password' // <-- so the entries are blocked out
+            label='Enter: Password'
+            name='passwword'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <Box
+            sx={{ mt: 1, display: 'flex', flexDirection: 'column'}}
+          >
+            <Button
+              sx={{mb: 1}}
+              variant='contained'
+              onClick={onClickLogin}
+              disabled={!username || !password} // empty field check
+            >Log in</Button>
+            <Divider>Don't have an account?</Divider>
+            <Button 
+              sx={{ mt: 2 }}
+              variant='outlined'
+              onClick={() => navigate('/register')}
+            >Register</Button>
+          </Box>
+        </Box>
+        {message && <Alert sx={{mt: 1}} severity={messageSeverity}>{message}</Alert>}
+      </Box>
+    </Container>
   )
 }
 

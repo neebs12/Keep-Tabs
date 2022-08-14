@@ -1,6 +1,10 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Alert, AlertColor, Button, TextField } from '@mui/material'
+import { Box } from '@mui/material'
+import { Container } from '@mui/material'
+import { Divider } from '@mui/material'
+import { Typography } from '@mui/material'
 
 import { registerUser } from '../../apis/user.api'
 
@@ -87,37 +91,83 @@ const Register = () => {
     setPassword('')
     setConfirmPassword('')
   }
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('triggering submission')
+  }  
   
   return (
-    <div id='registration-page'>
-      <h1>Registration Page</h1>
-      <TextField
-        placeholder='username'
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <TextField
-        placeholder='password'
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        disabled={!username}
-      />
-      <TextField
-        placeholder='confirm password'
-        value={confirmpassword}
-        onChange={e => setConfirmPassword(e.target.value)}
-        disabled={!password}
-      />
-      <Button
-        variant='outlined'
-        onClick={onClickClear}
-      >Clear</Button>
-      <Button 
-        variant='outlined'
-        onClick={onClickRegister}
-      >Register</Button>
-      {message && <Alert severity={messageSeverity}>{message}</Alert>}
-    </div>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          mt: 5, // margin top to the top factor. True px is determined by mt constant at theme
+          display: 'flex', // <-- sets display
+          flexDirection: 'column', // <--- aligns vertically, but takes up all hor space
+          alignItems: 'center' // <--- compresses horizontally
+        }}
+      >
+        {/* so is HTML h2 but is h5 in appearance */}
+        <Typography variant='h5' component='h2'>Register Account</Typography>
+        <Box component='form' onSubmit={onSubmit}>
+          <TextField
+            margin='dense'
+            required
+            fullWidth 
+            id='username'
+            label='New Username'
+            name='username' 
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+          <TextField
+            margin='dense'
+            required
+            fullWidth
+            id='password'
+            type='password' // <-- so the entries are blocked out
+            label='New Password'
+            name='passwword'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <TextField
+            margin='dense'
+            required
+            fullWidth
+            id='confirm password'
+            type='password' // <-- so the entries are blocked out
+            label='Confirm Password'
+            name='confirm passwword'
+            value={confirmpassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+          <Box
+            sx={{mt: 1, display: 'flex', justifyContent: 'space-between'}}
+          >
+            <Button
+              variant='contained'
+              onClick={onClickClear}
+            >Clear</Button>
+            <Button 
+              variant='contained'
+              onClick={onClickRegister}
+            >Register</Button>
+          </Box>
+        </Box>
+
+        {/* width: '100%' otherwise flex-alignItems shrinks this */}
+        <Divider sx={{m: 1, width: '100%'}}>Have an account?</Divider>
+
+        <Button 
+          sx={{mt: 1}}
+          variant='outlined'
+          onClick={() => navigate('/login')}
+        >Go to login page</Button>        
+        {message && <Alert sx={{mt: 1}} severity={messageSeverity}>{message}</Alert>}
+      </Box>
+    </Container>
+
   )
 }
 
