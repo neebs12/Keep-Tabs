@@ -64,6 +64,10 @@ const Register = () => {
       myMessage = 'please complete all the fields'
       mySeverity = 'warning'
       allow = false
+    } else if (/(^\s|\W|$\s)/.test(password)) {
+      myMessage = 'password must only contain letters and numbers'
+      mySeverity = 'warning'
+      allow = false
     } else if (password !== confirmpassword) {
       myMessage = 'please make sure the passwords match'
       mySeverity = 'warning'
