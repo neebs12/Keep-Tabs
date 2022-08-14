@@ -49,13 +49,10 @@ const Login = () => {
     // "success" | "info" | "warning" | "error"
     makeTimeoutMessage(mySeverity as AlertColor, myMessage)
   }
-  
-  const onClickRegister = () => {
-    
-  }
 
   return (
     <div id='login-page'>
+      <h1>Login Page</h1>
       <TextField 
         placeholder='username'
         value={username}
@@ -73,7 +70,7 @@ const Login = () => {
       >Log in</Button>
       <Button 
         variant='outlined'
-
+        onClick={() => navigate('/register')}
       >Register</Button>
       {message && <Alert severity={messageSeverity}>{message}</Alert>}
     </div>
