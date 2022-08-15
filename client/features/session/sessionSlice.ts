@@ -3,12 +3,14 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface SessionState {
   id: string
-  username: string
+  username: string,
+  token: string
 }
 
 const initialState: SessionState = {
   id: '',
-  username: ''
+  username: '',
+  token: ''
 }
 
 export const sessionSlice = createSlice({
@@ -19,11 +21,11 @@ export const sessionSlice = createSlice({
     addUser: (state, action: PayloadAction<SessionState>) => {
       state.id = action.payload.id
       state.username = action.payload.username
+      state.token = action.payload.token
     },
     // logout, removed from frontend state
     removeUser: (state) => {
-      state.id = ''
-      state.username = ''
+      state = {...initialState}
     }
   }
 })

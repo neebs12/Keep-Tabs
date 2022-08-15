@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import sessionReducer from './features/session/sessionSlice'
+import todosReducer from './features/todos/todosSlice'
 
 export const store = configureStore({
   reducer: {
-    session: sessionReducer // <-- session consistent .name with asc. slice
+    session: sessionReducer, // <-- session consistent .name with asc. slice
+    todos: todosReducer
   }
 })
 

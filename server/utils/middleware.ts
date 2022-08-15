@@ -15,7 +15,7 @@ const requestLogger = (req: express.Request, _res: express.Response , next: expr
   next();
 }
 
-const userExtractor = async (req: express.Request, _res: express.Response, next: express.NextFunction) => {
+const userExtractor = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   // Receives a req. 
   // This request contains a "authorization" header templated as "bearer <jwt>"
   // Thus, we need to extract the `jwt`. 
@@ -41,9 +41,9 @@ const userExtractor = async (req: express.Request, _res: express.Response, next:
   const id = decodedToken.id
   const user = await UserModel.findById(id)
   if (!user) {
-    throw new Error('User not found!')
-    // next()
-    // return
+    // TODO: actually use the next(error) functionality of express with a proper error handler middleware
+    res.status(404).json({error: 'user not found'})
+    return
   }
 
   req.user = {
