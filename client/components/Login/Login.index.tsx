@@ -55,6 +55,7 @@ const Login = () => {
     makeTimeoutMessage(mySeverity as AlertColor, myMessage)
   }
 
+  // TODO: Fix events, so that submission pertains to forms
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log('triggering submission')
@@ -84,7 +85,7 @@ const Login = () => {
             required // applies `*` on the form label
             fullWidth // taked up horizontal space, think, overrides `aignItems` clause of larger box
             id='username' // for screen readers
-            label='Enter: Username' // what apears
+            label='Username' // what apears
             name='username' // for form submission (but we use controlled components anyway :/)
             value={username} 
             onChange={e => setUsername(e.target.value)}
@@ -95,7 +96,7 @@ const Login = () => {
             fullWidth
             id='password'
             type='password' // <-- so the entries are blocked out
-            label='Enter: Password'
+            label='Password'
             name='passwword'
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -108,7 +109,7 @@ const Login = () => {
               variant='contained'
               onClick={onClickLogin}
               disabled={!username || !password} // empty field check
-            >Log in</Button>
+            >Login</Button>
             <Divider>Don't have an account?</Divider>
             <Button 
               sx={{ mt: 2 }}

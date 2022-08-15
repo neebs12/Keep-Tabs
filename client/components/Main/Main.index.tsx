@@ -9,25 +9,15 @@ import { logoutUser } from '../../apis/user.api'
 
 // there should be a logout button here, this deletes the existing cookie and redirects us to `/` for better flow
 const Main = () => {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  // const navigate = useNavigate()
+  // const dispatch = useAppDispatch()
   const username = useAppSelector(state => state.session.username)
-
-  const onClickLogout = async () => {
-    await logoutUser()
-    dispatch(removeUser())
-    navigate('/')
-  }
 
   return (
     <>
     <h1>
-      Welcome to Main Page! {username}
+      This is your personal page {username}!
     </h1>
-    <Button 
-      variant='outlined'
-      onClick={onClickLogout}
-    >Logout</Button>
   </>
 
   )

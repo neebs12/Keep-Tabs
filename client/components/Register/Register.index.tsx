@@ -92,6 +92,7 @@ const Register = () => {
     setConfirmPassword('')
   }
 
+  // TODO: Fix events, so that submission pertains to forms
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log('triggering submission')
