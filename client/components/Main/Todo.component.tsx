@@ -8,8 +8,18 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 
 import { Todo } from '../../features/todos/todosSlice'
 
+const maxSecondaryWords = 7
+
 const TodoComponent = (props: Todo) => {
   const [isCompleted, setIsCompleted] = useState<Boolean>(props.completed)
+
+  // TODO: Probably better with an `overflow` css rule instead
+  // -- set the typography with a set width then `...` 
+  // -- will be generated automatically
+  const secondaryDescrArry = props.description.split(' ')
+  const secondaryDescr = secondaryDescrArry.length > maxSecondaryWords 
+    ? `${secondaryDescrArry.slice(0, maxSecondaryWords).join(' ')}...`
+    : `${secondaryDescrArry.join(' ')}`
 
   return (
     <ListItem 
@@ -18,6 +28,7 @@ const TodoComponent = (props: Todo) => {
       }}
     >
       <ListItemButton 
+        disableRipple
         sx={{flexGrow: 0}}
         onClick={() => setIsCompleted(bool => !bool)}
       >
@@ -28,14 +39,16 @@ const TodoComponent = (props: Todo) => {
       </ListItemButton>
       <ListItemText 
         primary={props.title}
-        secondary={props.description}
+        secondary={secondaryDescr}
       />
       <ListItemButton
+        disableRipple
         sx={{flexGrow: 0}}
       >
         <SettingsIcon fontSize='medium'/>
       </ListItemButton>
       <ListItemButton
+        disableRipple
         sx={{flexGrow: 0}}
       >
         <RemoveCircleIcon fontSize='medium'/>

@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { showNewTodo } from '../../features/modal/modalSlice'
+
 import { Avatar, Button, Container, Divider, Drawer, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import BallotIcon from '@mui/icons-material/Ballot'
@@ -14,8 +17,13 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 const drawerWidth = 240
 
 const Sidebar = () => {
+  const dispatch = useAppDispatch()
+  const onClickAddNewTodo = () => {
+    // console.log('making a new todo!')
+    dispatch(showNewTodo())
+  }
 
-  // const catergories = ['Work', 'Personal', 'Social']
+  // TODO: To be dynamically created based on available categories of todos
   const categoriesAvatarPair = {
     Work: <WorkIcon />,
     Personal: <SelfImprovementIcon />,
@@ -37,11 +45,15 @@ const Sidebar = () => {
     >
       <Toolbar />
       <Button 
-        // variant="contained" 
-        disableElevation={true} 
+        variant="contained" 
+        disableElevation={false}
         startIcon={<NoteAddIcon />} 
         size="large" 
-        sx={{mt: 1, mb: 0.5, ml: 0.5, mr: 0.5}}
+        onClick={onClickAddNewTodo}
+        sx={{
+          mt: 1, mb: 0.5, ml: 1, mr: 1,
+          borderRadius: '20px'
+        }}
       > Add New Todo </Button>
 
       <Button 

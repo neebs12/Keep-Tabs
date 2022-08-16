@@ -7,13 +7,9 @@ import { initializeTodos } from '../../features/todos/todosSlice'
 import type { TodosState } from '../../features/todos/todosSlice'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { Button, Container, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
-import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
-import SettingsIcon from '@mui/icons-material/Settings'
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import { Button, Container, List, Typography } from '@mui/material'
+import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 // This is where our todo dashboard will be displayed
 const Main = () => {
@@ -55,7 +51,10 @@ const Main = () => {
           disableElevation={true} 
           startIcon={<NoteAddIcon />} 
           size="large" 
-          sx={{mt: 1}}
+          sx={{
+            mt: 1,
+            borderRadius: '20px'
+          }}
         > Add New Todo </Button>
       </Container>
     )
@@ -67,7 +66,7 @@ const Main = () => {
         dense={true} // true for more compact look
         disablePadding={true}
       >
-        {todos.map(todo => (<TodoComponent {...todo}/>))}
+        {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
       </List>
     </>
   )
