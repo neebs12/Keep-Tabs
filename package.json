@@ -45,6 +45,7 @@
     "@babel/preset-typescript": "^7.17.12",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@reduxjs/toolkit": "^1.8.4",
     "@types/bcrypt": "^5.0.0",

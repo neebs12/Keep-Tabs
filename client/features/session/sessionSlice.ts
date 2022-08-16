@@ -24,8 +24,9 @@ export const sessionSlice = createSlice({
       state.token = action.payload.token
     },
     // logout, removed from frontend state
-    removeUser: (state) => {
-      state = {...initialState}
+    removeUser: (_) => {
+      // state = {...initialState}
+      return initialState
     }
   }
 })

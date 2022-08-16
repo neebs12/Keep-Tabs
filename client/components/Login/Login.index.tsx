@@ -62,7 +62,8 @@ const Login = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    // Horizontally centers content
+    <Container component="div" maxWidth="xs">
       {/* 
       - Container so that everything is horizontally centered
       - Is the main component

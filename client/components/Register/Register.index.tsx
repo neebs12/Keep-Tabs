@@ -99,7 +99,8 @@ const Register = () => {
   }  
   
   return (
-    <Container component="main" maxWidth="xs">
+    // Horizontall centers content
+    <Container component="div" maxWidth="xs">
       <Box
         sx={{
           mt: 5, // margin top to the top factor. True px is determined by mt constant at theme
@@ -168,7 +169,6 @@ const Register = () => {
         {message && <Alert sx={{mt: 1}} severity={messageSeverity}>{message}</Alert>}
       </Box>
     </Container>
-
   )
 }
 
