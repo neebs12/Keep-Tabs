@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import TodoComponent from './Todo.component'
+
 import { getTodos } from '../../apis/todos.api'
 import { initializeTodos } from '../../features/todos/todosSlice'
 import type { TodosState } from '../../features/todos/todosSlice'
@@ -35,58 +37,14 @@ const Main = () => {
       })
   }, [])
 
-  /* Each element is:
-  Todo {
-    title: string,
-    description: string, 
-    userId: string,
-    completed: boolean,
-    id: string
-  }  
-  */  
-
   return (
     <>
       <List 
         dense={true} // true for more compact look
         disablePadding={true}
       >
-        {todos.map(todo => {
-          return (
-            <>
-              <ListItem 
-                // disablePadding={true}
-              >
-                <ListItemButton 
-                  sx={{flexGrow: 0}}
-                >
-                  <CheckBoxOutlineBlankIcon fontSize='medium'/>
-                </ListItemButton>
-                <ListItemText 
-                  primary={todo.title}
-                  secondary={todo.description}
-                />
-                <ListItemButton
-                  sx={{flexGrow: 0}}
-                >
-                  <SettingsIcon fontSize='medium'/>
-                </ListItemButton>
-                <ListItemButton
-                  sx={{flexGrow: 0}}
-                >
-                  <RemoveCircleIcon fontSize='medium'/>
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-            </>
-          )
-        })}
+        {todos.map(todo => (<TodoComponent {...todo}/>))}
       </List>
-      {/* <ul>
-        {todos.map(t => {
-          return(<li key={t.id}>{t.title}</li>)
-        })}
-      </ul> */}
     </>
   )
 }
