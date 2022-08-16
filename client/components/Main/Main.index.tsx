@@ -7,7 +7,8 @@ import { initializeTodos } from '../../features/todos/todosSlice'
 import type { TodosState } from '../../features/todos/todosSlice'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { Button, Container, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 import SettingsIcon from '@mui/icons-material/Settings'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
@@ -30,12 +31,35 @@ const Main = () => {
         // assign to the redux store
         if (typeof response === 'string') { // <-- need to better this
           throw new Error('Errored request')
-          return
         }
         // debugger
         dispatch(initializeTodos(response.todos as TodosState))
       })
   }, [])
+
+  if (todos.length === 0) {
+    return (
+      <Container 
+        maxWidth='xs' 
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          mt: 5
+        }}
+      >
+        <Typography variant='h5' component='div' sx={{textAlign:'center'}}>
+          Make a new Todo today!
+        </Typography>
+        <Button 
+          variant="contained" 
+          disableElevation={true} 
+          startIcon={<NoteAddIcon />} 
+          size="large" 
+          sx={{mt: 1}}
+        > Add New Todo </Button>
+      </Container>
+    )
+  }
 
   return (
     <>

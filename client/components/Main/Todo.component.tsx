@@ -11,8 +11,6 @@ import { Todo } from '../../features/todos/todosSlice'
 const TodoComponent = (props: Todo) => {
   const [isCompleted, setIsCompleted] = useState<Boolean>(props.completed)
 
-
-
   return (
     <ListItem 
       sx={{

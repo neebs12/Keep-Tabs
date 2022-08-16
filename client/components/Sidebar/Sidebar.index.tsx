@@ -42,7 +42,7 @@ const Sidebar = () => {
         startIcon={<NoteAddIcon />} 
         size="large" 
         sx={{mt: 1, mb: 0.5, ml: 0.5, mr: 0.5}}
-      > Add New Note </Button>
+      > Add New Todo </Button>
 
       <Button 
         // variant="contained" 
