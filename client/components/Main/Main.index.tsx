@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
-import { Button } from '@mui/material'
 
 import { getTodos } from '../../apis/todos.api'
 import { initializeTodos } from '../../features/todos/todosSlice'
 import type { TodosState } from '../../features/todos/todosSlice'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
+import { Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
+
+import SettingsIcon from '@mui/icons-material/Settings'
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 
 // This is where our todo dashboard will be displayed
 const Main = () => {
@@ -30,18 +35,59 @@ const Main = () => {
       })
   }, [])
 
+  /* Each element is:
+  Todo {
+    title: string,
+    description: string, 
+    userId: string,
+    completed: boolean,
+    id: string
+  }  
+  */  
+
   return (
     <>
-    <h1>
-      This is your personal page {session.username}!
-    </h1>
-    <ul>
-      {todos.map(t => {
-        return(<li key={t.id}>{t.title}</li>)
-      })}
-    </ul>
-  </>
-
+      <List 
+        dense={true} // true for more compact look
+        disablePadding={true}
+      >
+        {todos.map(todo => {
+          return (
+            <>
+              <ListItem 
+                // disablePadding={true}
+              >
+                <ListItemButton 
+                  sx={{flexGrow: 0}}
+                >
+                  <CheckBoxOutlineBlankIcon fontSize='medium'/>
+                </ListItemButton>
+                <ListItemText 
+                  primary={todo.title}
+                  secondary={todo.description}
+                />
+                <ListItemButton
+                  sx={{flexGrow: 0}}
+                >
+                  <SettingsIcon fontSize='medium'/>
+                </ListItemButton>
+                <ListItemButton
+                  sx={{flexGrow: 0}}
+                >
+                  <RemoveCircleIcon fontSize='medium'/>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </>
+          )
+        })}
+      </List>
+      {/* <ul>
+        {todos.map(t => {
+          return(<li key={t.id}>{t.title}</li>)
+        })}
+      </ul> */}
+    </>
   )
 }
 

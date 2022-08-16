@@ -20,10 +20,13 @@ export const todosSlice = createSlice({
     // setTodos - applied todos attained from server
     initializeTodos: (_state, action: PayloadAction<TodosState>) => {
       return action.payload
+    },
+    clearTodos: () => {
+      return initialState
     }
   }
 })
 
-export const { initializeTodos } = todosSlice.actions
+export const { initializeTodos, clearTodos } = todosSlice.actions
 
 export default todosSlice.reducer

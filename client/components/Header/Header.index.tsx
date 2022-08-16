@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar } from '@mui/material'
+import { AppBar, Avatar } from '@mui/material'
 import { Box } from '@mui/material'
 import { Button } from '@mui/material'
 import { Toolbar } from '@mui/material'
@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { removeUser } from '../../features/session/sessionSlice'
+import { clearTodos } from '../../features/todos/todosSlice'
 import { logoutUser } from '../../apis/user.api'
 
 // This is the navigation bar
@@ -23,6 +24,8 @@ const Header = () => {
     if (username) { // <-- ie: is currently logged in but wishes to log out
       await logoutUser()
       dispatch(removeUser())
+      dispatch(clearTodos())
+      // need to also clear the 
     }
     // will handle userflow
     navigate('/')
@@ -47,6 +50,18 @@ const Header = () => {
           BESTEST-TODOS
         </Typography>
         <Box sx={{flexGrow: 1}}></Box> {/*Pushes logo and button apart*/}
+        {username && 
+          <>
+            <Avatar sx={{mr: 1}}>{username[0].toUpperCase()}</Avatar>
+            <Typography 
+              variant="h6" 
+              component="div" 
+              sx={{mr: 2}}
+            >
+              {`HI ${username.toUpperCase()}!`}
+            </Typography>
+          </>
+        }
         <Button color='inherit' variant='outlined' onClick={handleOnClick}>
           { sessionState }          
         </Button>
