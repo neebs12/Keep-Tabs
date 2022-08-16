@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import TodoComponent from './Todo.component'
 
 import { getTodos } from '../../apis/todos.api'
+import { showNewTodo } from '../../features/modal/modalSlice'
 import { initializeTodos } from '../../features/todos/todosSlice'
 import type { TodosState } from '../../features/todos/todosSlice'
 
@@ -13,12 +14,12 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 // This is where our todo dashboard will be displayed
 const Main = () => {
+  const dispatch = useAppDispatch()
   const session = useAppSelector(state => state.session)
   const todos = useAppSelector(state => {
     // debugger
     return state.todos
   })
-  const dispatch = useAppDispatch()
 
   // Here, we will fetch the todos that are available to us
   useEffect(() => {
@@ -32,6 +33,8 @@ const Main = () => {
         dispatch(initializeTodos(response.todos as TodosState))
       })
   }, [])
+
+  
 
   if (todos.length === 0) {
     return (
@@ -47,6 +50,7 @@ const Main = () => {
           Make a new Todo today!
         </Typography>
         <Button 
+          onClick={() => {dispatch(showNewTodo())}}
           variant="contained" 
           disableElevation={true} 
           startIcon={<NoteAddIcon />} 
