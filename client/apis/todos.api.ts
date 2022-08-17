@@ -13,11 +13,12 @@ interface getTodosResponse {
   }[]
 }
 
-export const getTodos = (session: SessionState) => {
+// export const getTodos = (session: SessionState) => {
+export const getTodos = () => {  
   return axios.get<getTodosResponse>('api/todos', {
-    headers: {
-      Authorization: `Bearer ${session.token}`
-    }
+    // headers: {
+    //   Authorization: `Bearer ${session.token}`
+    // }
   })
   .then(response => response.data)
   .catch(processAxiosError) 

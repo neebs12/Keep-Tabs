@@ -15,7 +15,7 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 // This is where our todo dashboard will be displayed
 const Main = () => {
   const dispatch = useAppDispatch()
-  const session = useAppSelector(state => state.session)
+  // const session = useAppSelector(state => state.session)
   const todos = useAppSelector(state => {
     // debugger
     return state.todos
@@ -23,7 +23,7 @@ const Main = () => {
 
   // Here, we will fetch the todos that are available to us
   useEffect(() => {
-    getTodos(session)
+    getTodos()
       .then(response => {
         // assign to the redux store
         if (typeof response === 'string') { // <-- need to better this
