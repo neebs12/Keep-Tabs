@@ -52,7 +52,8 @@ const Sidebar = () => {
         onClick={onClickAddNewTodo}
         sx={{
           mt: 1, mb: 0.5, ml: 1, mr: 1,
-          borderRadius: '20px'
+          borderRadius: '30px',
+          pt: 1.5, pb: 1.5
         }}
       > Add New Todo </Button>
 
@@ -68,7 +69,6 @@ const Sidebar = () => {
       <Divider />
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<ViewListIcon />} 
         size="large" 
@@ -76,7 +76,6 @@ const Sidebar = () => {
       >All</Button>      
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<DoneAllIcon />} 
         size="large" 
@@ -84,7 +83,6 @@ const Sidebar = () => {
       >Completed</Button>       
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<HourglassBottomIcon />} 
         size="large" 
