@@ -17,12 +17,6 @@ const maxSecondaryWords = 10
 
 const TodoComponent = (props: TodoComponentProps) => {
   const dispatch = useAppDispatch()
-  // const [isCompleted, setIsCompleted] = useState<boolean>(props.completed)
-  // const localTodo = useAppSelector(state => {
-  //   const local
-  //   const localTodo = 
-  //   state.todos.todos
-  // })
   // TODO: Probably better with an `overflow` css rule instead
   // -- set the typography with a set width then `...` 
   // -- will be generated automatically
@@ -40,6 +34,11 @@ const TodoComponent = (props: TodoComponentProps) => {
   const handleRemoveIconClick = () => {
     const todoId = props.id
     dispatch(removeTodo(todoId))
+  }
+
+  const handleUpdateIconClick = () => {
+    const todoId = props.id
+
   }
 
   return (

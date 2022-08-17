@@ -16,7 +16,7 @@ type LayoutProps = {
 // This will contain the 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const id = useAppSelector(state => state.session.id)
-  const showNewTodoModal = useAppSelector(state => state.modal.newTodo) 
+  const showNewTodoModal = useAppSelector(state => state.modal.newTodo.show) 
 
   return (
     <div>

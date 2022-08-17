@@ -36,8 +36,9 @@ const Login = () => {
     setTimeoutId(currentTimeoutId)    
   }
 
-  const onClickLogin = async () => {
-    // soft entry validation (empty fields check only)
+  // TODO: Fix events, so that submission pertains to forms
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     let myMessage = ''
     let mySeverity = ''
     const response = await loginUser(username, password)
@@ -52,13 +53,7 @@ const Login = () => {
     }
 
     // "success" | "info" | "warning" | "error"
-    makeTimeoutMessage(mySeverity as AlertColor, myMessage)
-  }
-
-  // TODO: Fix events, so that submission pertains to forms
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log('triggering submission')
+    makeTimeoutMessage(mySeverity as AlertColor, myMessage)    
   }
 
   return (
@@ -100,9 +95,9 @@ const Login = () => {
             sx={{ mt: 1, display: 'flex', flexDirection: 'column'}}
           >
             <Button
+              type='submit'
               sx={{mb: 1}}
               variant='contained'
-              onClick={onClickLogin}
               disabled={!username || !password} // empty field check
             >Login</Button>
             <Divider>Don't have an account?</Divider>

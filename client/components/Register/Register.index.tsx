@@ -37,28 +37,6 @@ const Register = () => {
 
     setTimeoutId(currentTimeoutId)    
   }
-  
-  const onClickRegister = async () => {
-    let myMessage = ''
-    let mySeverity = ''
-    
-    if (!allowRegistration()) {
-      return
-    }
-
-    const response = await registerUser(username, password)
-    if (typeof response === 'string') {
-      myMessage = `error: ${response}`
-      mySeverity = 'error'
-    } else {
-      myMessage = `successful login ${username}`
-      mySeverity = 'success'
-      navigate('/login')
-    }
-
-    // "success" | "info" | "warning" | "error"
-    makeTimeoutMessage(mySeverity as AlertColor, myMessage)    
-  }
 
   const allowRegistration = (): Boolean => {
     let allow = false
@@ -93,9 +71,27 @@ const Register = () => {
   }
 
   // TODO: Fix events, so that submission pertains to forms
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('triggering submission')
+    let myMessage = ''
+    let mySeverity = ''
+    
+    if (!allowRegistration()) {
+      return
+    }
+
+    const response = await registerUser(username, password)
+    if (typeof response === 'string') {
+      myMessage = `error: ${response}`
+      mySeverity = 'error'
+    } else {
+      myMessage = `successful login ${username}`
+      mySeverity = 'success'
+      navigate('/login')
+    }
+
+    // "success" | "info" | "warning" | "error"
+    makeTimeoutMessage(mySeverity as AlertColor, myMessage)       
   }  
   
   return (
@@ -152,8 +148,8 @@ const Register = () => {
               onClick={onClickClear}
             >Clear</Button>
             <Button 
+              type='submit'
               variant='contained'
-              onClick={onClickRegister}
             >Register</Button>
           </Box>
         </Box>
