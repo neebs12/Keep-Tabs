@@ -36,8 +36,9 @@ const Login = () => {
     setTimeoutId(currentTimeoutId)    
   }
 
-  const onClickLogin = async () => {
-    // soft entry validation (empty fields check only)
+  // TODO: Fix events, so that submission pertains to forms
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     let myMessage = ''
     let mySeverity = ''
     const response = await loginUser(username, password)
@@ -52,27 +53,17 @@ const Login = () => {
     }
 
     // "success" | "info" | "warning" | "error"
-    makeTimeoutMessage(mySeverity as AlertColor, myMessage)
-  }
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log('triggering submission')
+    makeTimeoutMessage(mySeverity as AlertColor, myMessage)    
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      {/* 
-      - Container so that everything is horizontally centered
-      - Is the main component
-      - Will have maxWidth of extra small "xs" to ensure fluidity (?)
-      */}
+    <Container component="div" maxWidth="xs">
       <Box
         sx={{
-          mt: 5, // margin top to the top factor. True px is determined by mt constant at theme
-          display: 'flex', // <-- sets display
-          flexDirection: 'column', // <--- aligns vertically, but takes up all hor space
-          alignItems: 'center' // <--- compresses horizontally
+          mt: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center' // compresses horizontally
         }}
       >
         {/* so is HTML h2 but is h5 in appearance */}
@@ -84,7 +75,7 @@ const Login = () => {
             required // applies `*` on the form label
             fullWidth // taked up horizontal space, think, overrides `aignItems` clause of larger box
             id='username' // for screen readers
-            label='Enter: Username' // what apears
+            label='Username' // what apears
             name='username' // for form submission (but we use controlled components anyway :/)
             value={username} 
             onChange={e => setUsername(e.target.value)}
@@ -95,7 +86,7 @@ const Login = () => {
             fullWidth
             id='password'
             type='password' // <-- so the entries are blocked out
-            label='Enter: Password'
+            label='Password'
             name='passwword'
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -104,11 +95,11 @@ const Login = () => {
             sx={{ mt: 1, display: 'flex', flexDirection: 'column'}}
           >
             <Button
+              type='submit'
               sx={{mb: 1}}
               variant='contained'
-              onClick={onClickLogin}
               disabled={!username || !password} // empty field check
-            >Log in</Button>
+            >Login</Button>
             <Divider>Don't have an account?</Divider>
             <Button 
               sx={{ mt: 2 }}

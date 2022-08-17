@@ -15,7 +15,16 @@ const requestLogger = (req: express.Request, _res: express.Response , next: expr
   next();
 }
 
-const userExtractor = async (req: express.Request, _res: express.Response, next: express.NextFunction) => {
+// LEGACY CODE: for abiding by basic HTTP auth https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
+// const getEncodedTokenFromHeader = (req: express.Request): string | undefined => {
+//   return req.get('authorization')
+// }
+
+const getEncodedTokenFromCookie = (req: express.Request): string | undefined => {
+  return req.cookies.token as string
+}
+
+const userExtractor = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   // Receives a req. 
   // This request contains a "authorization" header templated as "bearer <jwt>"
   // Thus, we need to extract the `jwt`. 
@@ -24,9 +33,12 @@ const userExtractor = async (req: express.Request, _res: express.Response, next:
   // Fetch the user from the database via UserModel.findById (allowed by our token format)
   // Then assign this user in to req.user (.user field) field of the request object
   // -- if req.user is falsy in the following apis, then we will have to tell the front end that it does not work! - possibly re-navigate to login page
-  const authHeaderVal = req.get('authorization')
+
+  // const authHeaderVal = req.get('authorization')
+  const authHeaderVal = getEncodedTokenFromCookie(req)
   if (!authHeaderVal) {
-    next()
+    res.status(404).json({error: 'no bearer token found'})
+    // next()
     return
   }
 
@@ -34,16 +46,17 @@ const userExtractor = async (req: express.Request, _res: express.Response, next:
 
   const decodedToken = jwt.verify(encodedToken, config.SECRET)
   if (typeof decodedToken === 'string' || !decodedToken.id) {
-    next() 
+    res.status(404).json({error: 'decoded token does not give proper values'})
+    // next() 
     return
   }
 
   const id = decodedToken.id
   const user = await UserModel.findById(id)
   if (!user) {
-    throw new Error('User not found!')
-    // next()
-    // return
+    // TODO: actually use the next(error) functionality of express with a proper error handler middleware
+    res.status(404).json({error: 'user not found'})
+    return
   }
 
   req.user = {

@@ -1,14 +1,9 @@
 import axios from 'axios'
 
+import { processAxiosError } from './api.util'
+
 interface LoginUserResponse {
   token: string
-}
-
-// expected from API
-interface UnsuccessfulResponse {
-  data: {
-    error: string
-  }
 }
 
 export const loginUser = (username: string, password: string) => {  
@@ -46,20 +41,5 @@ export const logoutUser = () => {
     .catch(processAxiosError)
 }
 
-// HELPER fn
-const processAxiosError = (error: any): string => {
-  if (axios.isAxiosError(error)) {
-    // is AxiosError<any, any>
-    // if the user sends something back to us, if at all
-    if (error.response) { 
-      // type assertion of response exists
-      const response = error.response as UnsuccessfulResponse
-      return response.data.error
-    } else {
-      return error.message
-    }
-  } else {
-    return 'Unexpected error has occurred'
-  }  
-}
+
 

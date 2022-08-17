@@ -88,7 +88,8 @@ router.post('/validate', async (req, res) => {
   }
 
   // otherwise, does exists and send SafeUser back to the server.
-  res.status(200).json({...decodedToken})
+  // -- with additional information of token: encodedToken
+  res.status(200).json({...decodedToken, token: encodedToken})
 })
 
 router.post('/logout', async (_req, res) => {

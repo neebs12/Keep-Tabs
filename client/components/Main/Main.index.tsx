@@ -1,36 +1,46 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '@mui/material'
+import React, { useEffect } from 'react'
+
+import TodoComponent from './Todo.component'
+import LoadingComponent from './Loading.component'
+import NoTodosComponent from './NoTodos.component'
+
+import { fetchTodos } from '../../features/todos/todosSlice'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { removeUser } from '../../features/session/sessionSlice'
 
-import { logoutUser } from '../../apis/user.api'
+import { List } from '@mui/material'
 
-// there should be a logout button here, this deletes the existing cookie and redirects us to `/` for better flow
+// This is where our todo dashboard will be displayed
 const Main = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const username = useAppSelector(state => state.session.username)
+  const todos = useAppSelector(state => {
+    // debugger
+    return state.todos.todos
+  })
+  const loadingTodos = useAppSelector(state => {
+    return state.todos.loading
+  })
 
-  const onClickLogout = async () => {
-    await logoutUser()
-    dispatch(removeUser())
-    navigate('/')
+  // Here, we will fetch the todos that are available to us
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [])
+
+  if (loadingTodos === true) {
+    return (<LoadingComponent />);    
+  } else if (todos.length === 0) {
+    return (<NoTodosComponent />)
+  } else {
+    return (
+      <List 
+        dense={true} // true for more compact look
+        disablePadding={true}
+      >
+        {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
+      </List>
+    )
   }
 
-  return (
-    <>
-    <h1>
-      Welcome to Main Page! {username}
-    </h1>
-    <Button 
-      variant='outlined'
-      onClick={onClickLogout}
-    >Logout</Button>
-  </>
-
-  )
 }
 
 export default Main
