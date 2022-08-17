@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import TodoComponent from './Todo.component'
-import LoadingComponent from './Loading.component'
+import LoadingComponent, { LoadingTab } from './Loading.component'
 import NoTodosComponent from './NoTodos.component'
 
 import { fetchTodos } from '../../features/todos/todosSlice'
@@ -32,12 +32,15 @@ const Main = () => {
     return (<NoTodosComponent />)
   } else {
     return (
-      <List 
-        dense={true} // true for more compact look
-        disablePadding={true}
-      >
-        {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
-      </List>
+      <>
+        <List 
+          dense={true} // true for more compact look
+          disablePadding={true}
+        >
+          {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
+        </List>
+        <LoadingTab loading={true}/>
+      </>
     )
   }
 
