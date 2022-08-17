@@ -19,13 +19,18 @@ const ModalForm = ({ show }: ModalFormProps) => {
 
   const handleOnClose = () => {
     // plus, 
+    setTitle('')
+    setDescription('')
+    setCompleted(false)
     dispatch(hideNewTodo())
-    // setOpenState(false)
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log('recognized form submission at modal')
+    setTitle('')
+    setDescription('')
+    setCompleted(false)
     dispatch(hideNewTodo())
   }
 

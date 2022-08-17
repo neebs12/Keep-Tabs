@@ -1,79 +1,46 @@
 import React, { useEffect } from 'react'
 
 import TodoComponent from './Todo.component'
+import LoadingComponent from './Loading.component'
+import NoTodosComponent from './NoTodos.component'
 
-import { getTodos } from '../../apis/todos.api'
-import { showNewTodo } from '../../features/modal/modalSlice'
-import { initializeTodos } from '../../features/todos/todosSlice'
-import type { TodosState } from '../../features/todos/todosSlice'
+import { fetchTodos } from '../../features/todos/todosSlice'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
 
-import { Button, Container, List, Typography } from '@mui/material'
-import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import { List } from '@mui/material'
 
 // This is where our todo dashboard will be displayed
 const Main = () => {
   const dispatch = useAppDispatch()
-  // const session = useAppSelector(state => state.session)
   const todos = useAppSelector(state => {
     // debugger
-    return state.todos
+    return state.todos.todos
+  })
+  const loadingTodos = useAppSelector(state => {
+    return state.todos.loading
   })
 
   // Here, we will fetch the todos that are available to us
   useEffect(() => {
-    getTodos()
-      .then(response => {
-        // assign to the redux store
-        if (typeof response === 'string') { // <-- need to better this
-          throw new Error('Errored request')
-        }
-        // debugger
-        dispatch(initializeTodos(response.todos as TodosState))
-      })
+    dispatch(fetchTodos())
   }, [])
 
-  
-
-  if (todos.length === 0) {
+  if (loadingTodos === true) {
+    return (<LoadingComponent />);    
+  } else if (todos.length === 0) {
+    return (<NoTodosComponent />)
+  } else {
     return (
-      <Container 
-        maxWidth='xs' 
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          mt: 5
-        }}
-      >
-        <Typography variant='h5' component='div' sx={{textAlign:'center'}}>
-          Make a new Todo today!
-        </Typography>
-        <Button 
-          onClick={() => {dispatch(showNewTodo())}}
-          variant="contained" 
-          disableElevation={true} 
-          startIcon={<NoteAddIcon />} 
-          size="large" 
-          sx={{
-            mt: 1,
-            borderRadius: '20px'
-          }}
-        > Add New Todo </Button>
-      </Container>
-    )
-  }
-
-  return (
-    <>
       <List 
         dense={true} // true for more compact look
         disablePadding={true}
       >
         {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
       </List>
-    </>
-  )
+    )
+  }
+
 }
 
 export default Main

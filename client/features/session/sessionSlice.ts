@@ -25,7 +25,6 @@ export const sessionSlice = createSlice({
     },
     // logout, removed from frontend state
     removeUser: (_) => {
-      // state = {...initialState}
       return initialState
     }
   }

@@ -62,19 +62,13 @@ const Login = () => {
   }
 
   return (
-    // Horizontally centers content
     <Container component="div" maxWidth="xs">
-      {/* 
-      - Container so that everything is horizontally centered
-      - Is the main component
-      - Will have maxWidth of extra small "xs" to ensure fluidity (?)
-      */}
       <Box
         sx={{
-          mt: 5, // margin top to the top factor. True px is determined by mt constant at theme
-          display: 'flex', // <-- sets display
-          flexDirection: 'column', // <--- aligns vertically, but takes up all hor space
-          alignItems: 'center' // <--- compresses horizontally
+          mt: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center' // compresses horizontally
         }}
       >
         {/* so is HTML h2 but is h5 in appearance */}
