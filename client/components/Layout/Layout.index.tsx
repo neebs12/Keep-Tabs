@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks'
 
 import { Box, Toolbar } from '@mui/material'
 
-import ModalForm from './ModalForm.index'
+import ModalManager from './ModalManager'
 import Header from '../Header/Header.index'
 import Sidebar from '../Sidebar/Sidebar.index'
 
@@ -16,13 +16,12 @@ type LayoutProps = {
 // This will contain the 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const id = useAppSelector(state => state.session.id)
-  const showNewTodoModal = useAppSelector(state => state.modal.newTodo.show) 
 
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
-        {/* Modal, TODO: will be a modal manager later*/}
-        <ModalForm show={showNewTodoModal} />
+        {/* modals via Modal Manager */}
+        <ModalManager />
         {/* header */}
         <Header />
         {/* sidebar, optionally rendered */}

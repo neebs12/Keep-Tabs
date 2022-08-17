@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useAppDispatch } from '../../hooks'
 import { updateTodo, removeTodo } from '../../features/todos/todosSlice'
+import { showUpdateTodoModal } from '../../features/modal/modalSlice'
 
 import { ListItem, ListItemButton, ListItemText } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -38,7 +39,7 @@ const TodoComponent = (props: TodoComponentProps) => {
 
   const handleUpdateIconClick = () => {
     const todoId = props.id
-
+    dispatch(showUpdateTodoModal(todoId))
   }
 
   return (
@@ -64,6 +65,7 @@ const TodoComponent = (props: TodoComponentProps) => {
       <ListItemButton
         disableRipple
         sx={{flexGrow: 0}}
+        onClick={handleUpdateIconClick}
       >
         <SettingsIcon fontSize='medium'/>
       </ListItemButton>

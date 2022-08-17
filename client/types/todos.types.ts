@@ -7,3 +7,5 @@ export interface Todo {
 }
 
 export type TodoFromForm = Omit<Todo, 'id'>
+
+export type TodoFromModal = Omit<TodoFromForm, 'userId'>
