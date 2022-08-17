@@ -4,18 +4,11 @@ import type { Todo, TodoFromForm } from '../types/todos.types'
 import { processAxiosError } from './api.util'
 
 interface getTodosResponse {
-  // todos: {
-  //   title: string,
-  //   description: string, 
-  //   userId: string,
-  //   completed: boolean,
-  //   id: string
-  // }[]
   todos: Todo[]
 }
 
 // export const getTodos = (session: SessionState) => {
-export const getTodos = () => {  
+export const getTodos = (): Promise<getTodosResponse | string> => {  
   return axios.get<getTodosResponse>('api/todos')
     .then(response => response.data)
     .catch(processAxiosError) 
@@ -24,8 +17,17 @@ export const getTodos = () => {
 
 type postTodoReponse = Todo
 
-export const postTodo = (data: TodoFromForm) => {
+export const postTodo = (data: TodoFromForm): Promise<postTodoReponse | string> => {
   return axios.post<postTodoReponse>('api/todos', data)
     .then(response => response.data)
     .catch(processAxiosError)   
+}
+
+// I expect the full todo to be sent back to me with no issues
+type patchTodoResponse = Todo
+
+export const patchTodo = (data: Todo): Promise<patchTodoResponse | string> => {
+  return axios.patch<patchTodoResponse>('api/todos', data)
+    .then(response => response.data)
+    .catch(processAxiosError)     
 }

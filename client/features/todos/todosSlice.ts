@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { getTodos, postTodo } from '../../apis/todos.api'
+import { getTodos, postTodo, patchTodo } from '../../apis/todos.api'
 
 import type { Todo, TodoFromForm } from '../../types/todos.types'
 
@@ -48,6 +48,18 @@ export const todosSlice = createSlice({
       .addCase(addTodo.rejected, () => {
         return {todos: [], loading: 'Unable to add todo'}
       })
+      .addCase(updateTodo.pending, (state, _) => {
+        return {...state, loading: true}
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        const todoId = action.payload.id
+        const indOfTodoInState = state.todos.findIndex(t => t.id === todoId)
+        state.todos[indOfTodoInState] = action.payload // <-- mutate
+        state.loading = false
+      })
+      .addCase(updateTodo.rejected, () => {
+        return {todos: [], loading: 'Unable to add todo'}
+      })      
   },
 })
 
@@ -69,6 +81,16 @@ export const addTodo = createAsyncThunk('postTodo', async (todo: TodoFromForm) =
     throw new Error(response) // <-- rejected
   }  
   return response 
+})
+
+export const updateTodo = createAsyncThunk('updateTodo', async (todo: Todo) => {
+  // debugger
+  const response = await patchTodo(todo)
+  if (typeof response === 'string') {
+    throw new Error(response) // <-- rejected
+  }  
+  // debugger
+  return response
 })
 
 export default todosSlice.reducer

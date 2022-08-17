@@ -36,7 +36,7 @@ const Main = () => {
         dense={true} // true for more compact look
         disablePadding={true}
       >
-        {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
+        {todos.map(todo => (<TodoComponent key={`${todo.id}, ${todo.completed}`} {...todo}/>))}
       </List>
     )
   }

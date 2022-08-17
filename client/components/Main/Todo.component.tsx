@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+import { useAppDispatch } from '../../hooks'
+import { updateTodo } from '../../features/todos/todosSlice'
+
 import { ListItem, ListItemButton, ListItemText } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
@@ -10,11 +13,16 @@ import { Todo } from '../../types/todos.types'
 
 type TodoComponentProps = Todo
 
-const maxSecondaryWords = 7
+const maxSecondaryWords = 10
 
 const TodoComponent = (props: TodoComponentProps) => {
-  const [isCompleted, setIsCompleted] = useState<Boolean>(props.completed)
-
+  const dispatch = useAppDispatch()
+  // const [isCompleted, setIsCompleted] = useState<boolean>(props.completed)
+  // const localTodo = useAppSelector(state => {
+  //   const local
+  //   const localTodo = 
+  //   state.todos.todos
+  // })
   // TODO: Probably better with an `overflow` css rule instead
   // -- set the typography with a set width then `...` 
   // -- will be generated automatically
@@ -22,6 +30,12 @@ const TodoComponent = (props: TodoComponentProps) => {
   const secondaryDescr = secondaryDescrArry.length > maxSecondaryWords 
     ? `${secondaryDescrArry.slice(0, maxSecondaryWords).join(' ')}...`
     : `${secondaryDescrArry.join(' ')}`
+
+  const handleCheckboxClick = () => {
+    const modifiedTodo = {...props, completed: !props.completed}
+    dispatch(updateTodo(modifiedTodo))
+    // setIsCompleted(s => !s)
+  }
 
   return (
     <ListItem 
@@ -32,9 +46,9 @@ const TodoComponent = (props: TodoComponentProps) => {
       <ListItemButton 
         disableRipple
         sx={{flexGrow: 0}}
-        onClick={() => setIsCompleted(bool => !bool)}
+        onClick={handleCheckboxClick}
       >
-        { isCompleted 
+        { props.completed 
           ? <CheckBoxIcon fontSize='medium' />
           : <CheckBoxOutlineBlankIcon fontSize='medium'/>
         }

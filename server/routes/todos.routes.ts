@@ -24,7 +24,9 @@ router.post('/', async (req, res) => {
   // apply the .userId to the todo object
   
   if (!user.id) {
-    throw new Error('No available id')
+    // throw new Error('No available id')
+    res.status(404).json({error: 'Invalid user'})
+    return
   }
 
   todo.userId = user.id
@@ -34,6 +36,34 @@ router.post('/', async (req, res) => {
   
   // send back created todo to the frontend
   res.status(201).json(addedTodo)
+})
+
+router.patch('/', async (req, res) => {
+  const userId = req.user.id
+  if (!userId) {
+    // throw new Error('No available id')
+    res.status(404).json({error: 'Invalid user'})
+    return
+  }
+
+  // this contains the modified todo
+  const todo: Todo = req.body
+  const todoId = todo.id
+  if (!todo.id) {
+    res.status(404).json({error: 'No todo id has been sent!'})
+    return    
+  }
+
+  const modifiedTodo = await TodoModel.findByIdAndUpdate(
+    todoId, todo, {returnDocument: 'after'}
+  )
+  if (!modifiedTodo) {
+    res.status(404).json({error: 'No todo has been modified!'})
+    return
+  }
+
+  // is otherwise successful
+  res.status(200).json(modifiedTodo)
 })
 
 export default router
