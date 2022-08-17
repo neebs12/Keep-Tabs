@@ -1,15 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { getTodos } from '../../apis/todos.api'
+import { getTodos, postTodo } from '../../apis/todos.api'
 
-export interface Todo {
-    title: string,
-    description: string, 
-    userId: string,
-    completed: boolean,
-    id: string
-}
+import type { Todo, TodoFromForm } from '../../types/todos.types'
 
 export type TodosState = {
   todos: Todo[],
@@ -44,6 +38,16 @@ export const todosSlice = createSlice({
       .addCase(fetchTodos.rejected, () => {
         return {todos: [], loading: 'Unable to fetch todos'}
       })
+      .addCase(addTodo.pending, (state, _) => {
+        return {...state, loading: true}
+      })
+      .addCase(addTodo.fulfilled, (state, action) => {
+        state.todos.push(action.payload)
+        state.loading = false
+      })
+      .addCase(addTodo.rejected, () => {
+        return {todos: [], loading: 'Unable to add todo'}
+      })
   },
 })
 
@@ -54,9 +58,17 @@ export const fetchTodos = createAsyncThunk('fetchTodos', async () => {
   const response = await getTodos()
   // await new Promise((resolve: any, _) => {setTimeout(() => resolve(), 50000)})
   if (typeof response === 'string') {
-    throw new Error('Unable to get todos') // <-- rejected
+    throw new Error(response) // <-- rejected
   }
   return response.todos as Todo[]
+})
+
+export const addTodo = createAsyncThunk('postTodo', async (todo: TodoFromForm) => {
+  const response = await postTodo(todo)
+  if (typeof response === 'string') {
+    throw new Error(response) // <-- rejected
+  }  
+  return response 
 })
 
 export default todosSlice.reducer

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { hideNewTodo } from '../../features/modal/modalSlice'
+import { hideNewTodoModal } from '../../features/modal/modalSlice'
+import { addTodo } from '../../features/todos/todosSlice'
 
-import { Box, Button, Typography, Toolbar, TextField, CssBaseline, Switch, FormGroup, FormControlLabel } from '@mui/material'
-import { Modal } from '@mui/material'
+import type { TodoFromForm } from '../../types/todos.types'
+
+import { Box, Button, Typography, Modal, TextField, CssBaseline, Switch, FormGroup, FormControlLabel } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 interface ModalFormProps {
@@ -13,25 +15,35 @@ interface ModalFormProps {
 
 const ModalForm = ({ show }: ModalFormProps) => {
   const dispatch = useAppDispatch()
+  const userId = useAppSelector(state => state.session.id) // userId
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
-  const [Completed, setCompleted] = useState<boolean>(false)
+  const [completed, setCompleted] = useState<boolean>(false)
 
   const handleOnClose = () => {
     // plus, 
     setTitle('')
     setDescription('')
     setCompleted(false)
-    dispatch(hideNewTodo())
+    dispatch(hideNewTodoModal())
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const todoSubmit: TodoFromForm = {
+      userId: userId,
+      title: title, 
+      description: description,
+      completed: completed
+    }
+
+    dispatch(addTodo(todoSubmit))
+
     console.log('recognized form submission at modal')
     setTitle('')
     setDescription('')
     setCompleted(false)
-    dispatch(hideNewTodo())
+    dispatch(hideNewTodoModal())
   }
 
   const style = {
@@ -98,7 +110,7 @@ const ModalForm = ({ show }: ModalFormProps) => {
           />
           <FormGroup>
             <FormControlLabel control={
-                <Switch checked={Completed} onChange={() => setCompleted(s => !s)}/>
+                <Switch checked={completed} onChange={() => setCompleted(s => !s)}/>
               }
               label='Completed'
             />

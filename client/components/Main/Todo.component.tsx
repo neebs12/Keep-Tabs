@@ -6,11 +6,13 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 
-import { Todo } from '../../features/todos/todosSlice'
+import { Todo } from '../../types/todos.types'
+
+type TodoComponentProps = Todo
 
 const maxSecondaryWords = 7
 
-const TodoComponent = (props: Todo) => {
+const TodoComponent = (props: TodoComponentProps) => {
   const [isCompleted, setIsCompleted] = useState<Boolean>(props.completed)
 
   // TODO: Probably better with an `overflow` css rule instead

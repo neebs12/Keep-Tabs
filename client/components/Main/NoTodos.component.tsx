@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { showNewTodo } from '../../features/modal/modalSlice'
+import { showNewTodoModal } from '../../features/modal/modalSlice'
 
 import { Button, Container, List, Typography } from '@mui/material'
 
@@ -24,7 +24,7 @@ const NoTodos = () => {
         Make a new Todo today!
       </Typography>
       <Button 
-        onClick={() => {dispatch(showNewTodo())}}
+        onClick={() => {dispatch(showNewTodoModal())}}
         variant="contained" 
         disableElevation={true} 
         startIcon={<NoteAddIcon />} 

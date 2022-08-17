@@ -13,18 +13,18 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    showNewTodo: (state) => {
+    showNewTodoModal: (state) => {
       state.newTodo = true
     },
-    hideNewTodo: (state) => {
+    hideNewTodoModal: (state) => {
       state.newTodo = false
     },
-    toggleNewTodo: (state) => {
+    toggleNewTodoModal: (state) => {
       state.newTodo = !state.newTodo
     }
   }
 })
 
-export const { showNewTodo, hideNewTodo, toggleNewTodo } = modalSlice.actions
+export const { showNewTodoModal, hideNewTodoModal, toggleNewTodoModal } = modalSlice.actions
 
 export default modalSlice.reducer

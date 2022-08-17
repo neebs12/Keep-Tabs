@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { showNewTodo } from '../../features/modal/modalSlice'
+import { showNewTodoModal } from '../../features/modal/modalSlice'
 
 import { Avatar, Button, Container, Divider, Drawer, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
@@ -20,7 +20,7 @@ const Sidebar = () => {
   const dispatch = useAppDispatch()
   const onClickAddNewTodo = () => {
     // console.log('making a new todo!')
-    dispatch(showNewTodo())
+    dispatch(showNewTodoModal())
   }
 
   // TODO: To be dynamically created based on available categories of todos
