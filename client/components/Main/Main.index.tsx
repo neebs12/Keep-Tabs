@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import TodoComponent from './Todo.component'
-import LoadingComponent, { LoadingTab } from './Loading.component'
+import LoadingTab from './Loading.component'
 import NoTodosComponent from './NoTodos.component'
 
 import { fetchTodos } from '../../features/todos/todosSlice'
@@ -18,6 +18,9 @@ const Main = () => {
     return state.todos.todos
   })
   const loadingTodos = useAppSelector(state => {
+    if (typeof state.todos.loading === 'string') {
+      return true
+    }
     return state.todos.loading
   })
 
@@ -26,9 +29,7 @@ const Main = () => {
     dispatch(fetchTodos())
   }, [])
 
-  if (loadingTodos === true) {
-    return (<LoadingComponent />);    
-  } else if (todos.length === 0) {
+  if (todos.length === 0) {
     return (<NoTodosComponent />)
   } else {
     return (
@@ -39,7 +40,7 @@ const Main = () => {
         >
           {todos.map(todo => (<TodoComponent key={todo.id} {...todo}/>))}
         </List>
-        <LoadingTab loading={true}/>
+        <LoadingTab loading={loadingTodos}/>
       </>
     )
   }

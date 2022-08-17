@@ -7,7 +7,7 @@ import type { Todo, TodoFromForm } from '../../types/todos.types'
 
 export type TodosState = {
   todos: Todo[],
-  loading: Boolean | string
+  loading: boolean | string
 }
 
 const initialState: TodosState = {
