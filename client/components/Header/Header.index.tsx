@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppBar, Avatar } from '@mui/material'
 import { Box } from '@mui/material'
 import { Button } from '@mui/material'
@@ -19,7 +19,7 @@ const Header = () => {
   const username = useAppSelector(state => state.session.username)
   const dispatch = useAppDispatch()
   const sessionState = !username ? 'Login': 'Logout'
-
+  
   const handleOnClick = async () => {
     if (username) { // <-- ie: is currently logged in but wishes to log out
       await logoutUser()
@@ -52,7 +52,7 @@ const Header = () => {
         <Box sx={{flexGrow: 1}}></Box> {/*Pushes logo and button apart*/}
         {username && 
           <>
-            <Avatar sx={{mr: 1}}>{username[0].toUpperCase()}</Avatar>
+            <Avatar sx={{backgroundColor: stringToColor(username), mr: 1}}>{username[0].toUpperCase()}</Avatar>
             <Typography 
               variant="h6" 
               component="div" 
@@ -71,3 +71,22 @@ const Header = () => {
 }
 
 export default Header
+
+// inspiration: https://mui.com/material-ui/react-avatar/#main-content
+function stringToColor(string: string) {
+  let hash = 0;
+  let i;
+
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+
+  return color;
+}
