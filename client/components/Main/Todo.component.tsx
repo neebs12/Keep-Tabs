@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { useAppDispatch } from '../../hooks'
-import { updateTodo } from '../../features/todos/todosSlice'
+import { updateTodo, removeTodo } from '../../features/todos/todosSlice'
 
 import { ListItem, ListItemButton, ListItemText } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -37,6 +37,11 @@ const TodoComponent = (props: TodoComponentProps) => {
     // setIsCompleted(s => !s)
   }
 
+  const handleRemoveIconClick = () => {
+    const todoId = props.id
+    dispatch(removeTodo(todoId))
+  }
+
   return (
     <ListItem 
       sx={{
@@ -66,6 +71,7 @@ const TodoComponent = (props: TodoComponentProps) => {
       <ListItemButton
         disableRipple
         sx={{flexGrow: 0}}
+        onClick={handleRemoveIconClick}
       >
         <RemoveCircleIcon fontSize='medium'/>
       </ListItemButton>      

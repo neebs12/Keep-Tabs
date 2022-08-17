@@ -31,3 +31,14 @@ export const patchTodo = (data: Todo): Promise<patchTodoResponse | string> => {
     .then(response => response.data)
     .catch(processAxiosError)     
 }
+
+interface deleteTodoResponse {
+  id: string
+}
+
+// note, cannot send body with delete
+export const deleteTodo = (id: string): Promise<deleteTodoResponse | string> => {
+  return axios.delete<deleteTodoResponse>(`api/todos/${id}`)
+    .then(response => response.data)
+    .catch(processAxiosError)      
+}

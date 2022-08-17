@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { getTodos, postTodo, patchTodo } from '../../apis/todos.api'
+import { getTodos, postTodo, patchTodo, deleteTodo } from '../../apis/todos.api'
 
 import type { Todo, TodoFromForm } from '../../types/todos.types'
 
@@ -59,7 +59,19 @@ export const todosSlice = createSlice({
       })
       .addCase(updateTodo.rejected, () => {
         return {todos: [], loading: 'Unable to add todo'}
-      })      
+      })     
+      .addCase(removeTodo.pending, (state, _) => {
+        return {...state, loading: true}
+      })
+      .addCase(removeTodo.fulfilled, (state, action) => {
+        const todoId = action.payload.id
+        const indOfTodoInState = state.todos.findIndex(t => t.id === todoId)
+        state.todos.splice(indOfTodoInState, 1) // mutates at index
+        state.loading = false
+      })
+      .addCase(removeTodo.rejected, () => {
+        return {todos: [], loading: 'Unable to add todo'}
+      })       
   },
 })
 
@@ -70,7 +82,9 @@ export const fetchTodos = createAsyncThunk('fetchTodos', async () => {
   const response = await getTodos()
   // await new Promise((resolve: any, _) => {setTimeout(() => resolve(), 50000)})
   if (typeof response === 'string') {
-    throw new Error(response) // <-- rejected
+    throw new Error(response) 
+    // <-- rejected, TODO: consider promise.reject with the message stored inside
+    // <-- this is so action.payload has access to it
   }
   return response.todos as Todo[]
 })
@@ -90,6 +104,14 @@ export const updateTodo = createAsyncThunk('updateTodo', async (todo: Todo) => {
     throw new Error(response) // <-- rejected
   }  
   // debugger
+  return response
+})
+
+export const removeTodo = createAsyncThunk('removeTodo', async (id: string) => {
+  const response = await deleteTodo(id)
+  if (typeof response === 'string') {
+    throw new Error(response) // <-- rejected
+  }  
   return response
 })
 

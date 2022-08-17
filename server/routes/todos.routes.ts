@@ -55,7 +55,8 @@ router.patch('/', async (req, res) => {
   }
 
   const modifiedTodo = await TodoModel.findByIdAndUpdate(
-    todoId, todo, {returnDocument: 'after'}
+    todoId, todo, 
+    {returnDocument: 'after'} // <-- otherwise will return unapdated doc
   )
   if (!modifiedTodo) {
     res.status(404).json({error: 'No todo has been modified!'})
@@ -64,6 +65,29 @@ router.patch('/', async (req, res) => {
 
   // is otherwise successful
   res.status(200).json(modifiedTodo)
+})
+
+router.delete('/:id', async (req, res) => {
+  const userId = req.user.id
+  if (!userId) {
+    res.status(404).json({error: 'Invalid user'})
+    return
+  }
+
+  const todoId = req.params.id
+  if (!todoId) {
+    res.status(404).json({error: 'Invalid todo id, cannot be deleted'})
+    return    
+  }
+
+  const response = await TodoModel.findByIdAndDelete(todoId)
+  if (!response) {
+    res.status(404).json({error: 'Todo cannot be deleted from the database'})
+    return
+  }
+
+  // otherwise, successful deletion
+  res.status(200).send({id: todoId})
 })
 
 export default router
