@@ -18,6 +18,7 @@ const drawerWidth = 240
 
 const Sidebar = () => {
   const dispatch = useAppDispatch()
+  const todos = useAppSelector(state => state.todos.todos)
   const onClickAddNewTodo = () => {
     // console.log('making a new todo!')
     dispatch(showNewTodoModal())
@@ -31,16 +32,20 @@ const Sidebar = () => {
     Fun: <SkateboardingIcon />
   }
 
+  const status = {
+    numTodos: todos.length,
+    numCompleted: todos.filter(t => t.completed).length,
+    numIncomplete: todos.length - todos.filter(t => t.completed).length
+  }
+
   return (
     <Drawer
       variant="permanent"
       anchor="left"
       sx={{
-        // flexShrink: 0,
         width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-        // display: 'block'
       }}
     >
       <Toolbar />
@@ -55,7 +60,7 @@ const Sidebar = () => {
           borderRadius: '30px',
           pt: 1.5, pb: 1.5
         }}
-      > Add New Todo </Button>
+      >Add New Todo</Button>
 
       <Button 
         // variant="contained" 
@@ -73,21 +78,21 @@ const Sidebar = () => {
         startIcon={<ViewListIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >All</Button>      
+      >All - {status.numTodos}</Button>      
 
       <Button 
         disableElevation={true} 
         startIcon={<DoneAllIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >Completed</Button>       
+      >Completed - {status.numCompleted}</Button>       
 
       <Button 
         disableElevation={true} 
         startIcon={<HourglassBottomIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >Incomplete</Button>       
+      >Incomplete - {status.numIncomplete}</Button>       
 
       <Container sx={{display: 'flex', justifyContent:"center"}}><Typography variant="caption" color="primary">Categories</Typography></Container>
       <Divider />
