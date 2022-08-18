@@ -3,6 +3,8 @@ import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { showNewTodoModal } from '../../features/modal/modalSlice'
 
+import CompletionFilterButtons from './CompletionFilterButtons.component'
+
 import { Avatar, Button, Container, Divider, Drawer, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import BallotIcon from '@mui/icons-material/Ballot'
@@ -19,8 +21,8 @@ const drawerWidth = 240
 const Sidebar = () => {
   const dispatch = useAppDispatch()
   const todos = useAppSelector(state => state.todos.todos)
+
   const onClickAddNewTodo = () => {
-    // console.log('making a new todo!')
     dispatch(showNewTodoModal())
   }
 
@@ -63,7 +65,6 @@ const Sidebar = () => {
       >Add New Todo</Button>
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<BallotIcon />} 
         size="large" 
@@ -73,11 +74,21 @@ const Sidebar = () => {
       <Container sx={{display: 'flex', justifyContent:"center"}}><Typography variant="caption" color="primary">Completion</Typography></Container>
       <Divider />
 
-      <Button 
+      <CompletionFilterButtons {...status}/>
+
+      {/* <Button 
         disableElevation={true} 
         startIcon={<ViewListIcon />} 
         size="large" 
-        sx={{m: 0.5}}
+        sx={{
+          mt: 0.5, mb: 0.5, // experimental!
+          backgroundColor: '#e0e0e0',
+          "&.MuiButtonBase-root:hover": {
+            bgcolor: "#e0e0e0"          
+          },
+          borderRadius: 0
+        }}
+        disableRipple
       >All - {status.numTodos}</Button>      
 
       <Button 
@@ -92,7 +103,7 @@ const Sidebar = () => {
         startIcon={<HourglassBottomIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >Incomplete - {status.numIncomplete}</Button>       
+      >Incomplete - {status.numIncomplete}</Button>        */}
 
       <Container sx={{display: 'flex', justifyContent:"center"}}><Typography variant="caption" color="primary">Categories</Typography></Container>
       <Divider />
