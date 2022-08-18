@@ -9,7 +9,7 @@
     "build:client": "npm run webpack -- --mode production",
     "build:server": "npm run tsc",
     "tsc": "tsc",
-    "start": "npm run build && ts-node ./server",
+    "start": "ts-node ./server",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
     "dev:server": "ENV=dev ts-node-dev ./server",
