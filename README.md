@@ -1,5 +1,6 @@
 # Full Stack Todo Application
->Todo application written in MERN stack under TypeScript. 
+> Todo application written in MERN stack under TypeScript.
+> Demo application at: https://bestesttodos.herokuapp.com/
 
 **Learning goals involve:** 
 - Increased proficiency in version control (git)
