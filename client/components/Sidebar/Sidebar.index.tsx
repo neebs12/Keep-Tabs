@@ -3,6 +3,8 @@ import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { showNewTodoModal } from '../../features/modal/modalSlice'
 
+import CompletionFilterButtons from './CompletionFilterButtons.component'
+
 import { Avatar, Button, Container, Divider, Drawer, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import BallotIcon from '@mui/icons-material/Ballot'
@@ -18,8 +20,9 @@ const drawerWidth = 240
 
 const Sidebar = () => {
   const dispatch = useAppDispatch()
+  const todos = useAppSelector(state => state.todos.todos)
+
   const onClickAddNewTodo = () => {
-    // console.log('making a new todo!')
     dispatch(showNewTodoModal())
   }
 
@@ -31,16 +34,20 @@ const Sidebar = () => {
     Fun: <SkateboardingIcon />
   }
 
+  const status = {
+    numTodos: todos.length,
+    numCompleted: todos.filter(t => t.completed).length,
+    numIncomplete: todos.length - todos.filter(t => t.completed).length
+  }
+
   return (
     <Drawer
       variant="permanent"
       anchor="left"
       sx={{
-        // flexShrink: 0,
         width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-        // display: 'block'
       }}
     >
       <Toolbar />
@@ -52,12 +59,12 @@ const Sidebar = () => {
         onClick={onClickAddNewTodo}
         sx={{
           mt: 1, mb: 0.5, ml: 1, mr: 1,
-          borderRadius: '20px'
+          borderRadius: '30px',
+          pt: 1.5, pb: 1.5
         }}
-      > Add New Todo </Button>
+      >Add New Todo</Button>
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<BallotIcon />} 
         size="large" 
@@ -67,29 +74,36 @@ const Sidebar = () => {
       <Container sx={{display: 'flex', justifyContent:"center"}}><Typography variant="caption" color="primary">Completion</Typography></Container>
       <Divider />
 
-      <Button 
-        // variant="contained" 
+      <CompletionFilterButtons {...status}/>
+
+      {/* <Button 
         disableElevation={true} 
         startIcon={<ViewListIcon />} 
         size="large" 
-        sx={{m: 0.5}}
-      >All</Button>      
+        sx={{
+          mt: 0.5, mb: 0.5, // experimental!
+          backgroundColor: '#e0e0e0',
+          "&.MuiButtonBase-root:hover": {
+            bgcolor: "#e0e0e0"          
+          },
+          borderRadius: 0
+        }}
+        disableRipple
+      >All - {status.numTodos}</Button>      
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<DoneAllIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >Completed</Button>       
+      >Completed - {status.numCompleted}</Button>       
 
       <Button 
-        // variant="contained" 
         disableElevation={true} 
         startIcon={<HourglassBottomIcon />} 
         size="large" 
         sx={{m: 0.5}}
-      >Incomplete</Button>       
+      >Incomplete - {status.numIncomplete}</Button>        */}
 
       <Container sx={{display: 'flex', justifyContent:"center"}}><Typography variant="caption" color="primary">Categories</Typography></Container>
       <Divider />

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import { AppBar, Avatar } from '@mui/material'
 import { Box } from '@mui/material'
 import { Button } from '@mui/material'
@@ -7,6 +8,8 @@ import { Typography } from '@mui/material'
 import SentimentVerySatisfiedOutlinedIcon from '@mui/icons-material/SentimentVerySatisfiedOutlined';
 
 import { Link, useNavigate } from 'react-router-dom'
+
+import SearchBar from './Searchbar.component'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { removeUser } from '../../features/session/sessionSlice'
@@ -25,7 +28,6 @@ const Header = () => {
       await logoutUser()
       dispatch(removeUser())
       dispatch(clearTodos())
-      // need to also clear the 
     }
     // will handle userflow
     navigate('/')
@@ -49,7 +51,9 @@ const Header = () => {
         >
           BESTEST-TODOS
         </Typography>
-        <Box sx={{flexGrow: 1}}></Box> {/*Pushes logo and button apart*/}
+        <Box sx={{flexGrow: 1, display: 'flex'}}>
+          {username && <SearchBar />}
+        </Box> {/*Pushes logo and button apart*/}
         {username && 
           <>
             <Avatar sx={{backgroundColor: stringToColor(username), mr: 1}}>{username[0].toUpperCase()}</Avatar>

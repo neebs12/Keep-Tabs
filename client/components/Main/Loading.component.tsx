@@ -3,40 +3,37 @@ import React from 'react'
 import {Container, CircularProgress, Box, Paper} from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle';
 
-const Loading = () => {
-  return (
-    <Container maxWidth='xs' sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      mt: 5
-    }}>
-      <CircularProgress size={200}/>
-    </Container>
-  );    
-}
-
 interface LoadingTabProps {
   loading: boolean
 }
 
-export const LoadingTab = (props: LoadingTabProps) => {
-  const { loading } = props
-  // if loading is true, show the Circle Icon
-  // if loading is false, show the circular progress icon 
+const LoadingTab = (props: LoadingTabProps) => {
+  let { loading } = props
+
   return (
-    <Box 
+    <Box
       sx={{
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
         zIndex: (theme) => theme.zIndex.modal + 1
       }}
     >
-      <Paper variant="outlined" elevation={6}>
-        <CircularProgress />
+      <Paper 
+        elevation={3}
+        sx={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          border: '5px solid #e0e0e0',
+          borderRadius: '20px',
+          p: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {loading ? <CircularProgress size='24px'/> : <CircleIcon color='primary'/>}
       </Paper>
     </Box>
   )
 }
 
-export default Loading
+export default LoadingTab
