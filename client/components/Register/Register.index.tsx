@@ -43,20 +43,20 @@ const Register = () => {
     let myMessage = ''
     let mySeverity = ''    
     if (!username || !password || !confirmpassword) {
-      myMessage = 'please complete all the fields'
+      myMessage = 'Please complete all the fields'
       mySeverity = 'warning'
       allow = false
     } else if (/(^\s|\W|$\s)/.test(password)) {
-      myMessage = 'password must only contain letters and numbers'
+      myMessage = 'Password must only contain letters and numbers'
       mySeverity = 'warning'
       allow = false
     } else if (password !== confirmpassword) {
-      myMessage = 'please make sure the passwords match'
+      myMessage = 'Please make sure the passwords match'
       mySeverity = 'warning'
       allow = false
     } else {
-      myMessage = 'can submit registration form!'
-      mySeverity = 'info'      
+      myMessage = 'Resgitration successful!'
+      mySeverity = 'success'      
       allow = true
     }
 

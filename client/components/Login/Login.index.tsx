@@ -43,10 +43,10 @@ const Login = () => {
     let mySeverity = ''
     const response = await loginUser(username, password)
     if (typeof response === 'string') {
-      myMessage = `error: ${response}`
+      myMessage = `Error: ${response}`
       mySeverity = 'error'
     } else {
-      myMessage = `successful login ${username}`
+      myMessage = `Successful login ${username}`
       mySeverity = 'success'
       navigate('/') 
       // <--- navigates to home, handles user flow and redux store
