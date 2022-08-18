@@ -9,6 +9,7 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 const NoTodos = () => {
   const dispatch = useAppDispatch()
+  const searchFilter = useAppSelector(state => state.filter.filterBySearch)
 
   return (
     <Container 
@@ -30,10 +31,13 @@ const NoTodos = () => {
         startIcon={<NoteAddIcon />} 
         size="large" 
         sx={{
-          mt: 1,
+          mt: 1, mb: 1,
           borderRadius: '20px'
         }}
       > Add New Todo </Button>
+      {searchFilter && <Typography variant='h6' component='div' sx={{textAlign:'center', overflow: 'hidden'}}>
+        {`No matches 😔: '${searchFilter}'`}
+      </Typography>}      
     </Container>
   )  
 }

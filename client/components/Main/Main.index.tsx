@@ -23,6 +23,7 @@ const Main = () => {
     return state.todos.loading
   })
   const completionFilter = useAppSelector(state => state.filter.filterByCompletion)
+  const searchFilter = useAppSelector(state => state.filter.filterBySearch)
 
   // Here, we will fetch the todos that are available to us
   useEffect(() => {
@@ -31,7 +32,7 @@ const Main = () => {
 
   // sort todos according to completion
 
-  const processedTodos = processTodos(todos, completionFilter)
+  const processedTodos = processTodos(todos, completionFilter, searchFilter)
 
   if (processedTodos.length === 0) {
     return (
@@ -59,8 +60,10 @@ const Main = () => {
 
 export default Main
 
-const processTodos = (todos: Todo[], completionFilter: CompletionFilter): Todo[] => {
-  const returnedTodos = [...todos].filter(t => {
+const processTodos = (todos: Todo[], completionFilter: CompletionFilter, searchFilter: string): Todo[] => {
+
+  // filter by completion
+  let returnedTodos = [...todos].filter(t => {
     if (completionFilter === 'all') {
       return true
     } else if (completionFilter === 'completed') {
@@ -68,12 +71,21 @@ const processTodos = (todos: Todo[], completionFilter: CompletionFilter): Todo[]
     } else if (completionFilter === 'incomplete') {
       return !t.completed
     }
-  })
-  // <--- only sorts by completion at the moment
-  // <--- consider creation date for sorting in the future
+  }) 
+
+  // filter by search term
+  returnedTodos = [...returnedTodos].filter(t => {
+    const tText = [t.title, t.description].join(' ').toLocaleLowerCase()
+    const substring = searchFilter.toLocaleLowerCase()
+    return tText.includes(substring)
+  }) 
+
+  // auto-sort by completion
   const sortCallback = (a: Todo, b: Todo) => {
     return a.completed && !b.completed ? 0 : -1
   }
+  
   returnedTodos.sort(sortCallback)
+
   return returnedTodos
 }

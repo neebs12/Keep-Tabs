@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction } from '@reduxjs/toolkit'
 
 export type CompletionFilter = "all" | "completed" | "incomplete"
 
 export interface FilterState {
   filterByCompletion: CompletionFilter, 
+  filterBySearch: string
 }
 
 const initialState: FilterState = {
-  filterByCompletion: "all"
+  filterByCompletion: "all",
+  filterBySearch: ''
 }
 
 export const filterSlice = createSlice({
@@ -22,10 +25,13 @@ export const filterSlice = createSlice({
     },
     showIncomplete: (state) => {
       state.filterByCompletion = "incomplete"
+    },
+    applySearchFilter: (state, action: PayloadAction<string>) => {
+      state.filterBySearch = action.payload
     }
   }
 })
 
-export const { showAll, showCompleted, showIncomplete } = filterSlice.actions
+export const { showAll, showCompleted, showIncomplete, applySearchFilter } = filterSlice.actions
 
 export default filterSlice.reducer
