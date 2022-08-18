@@ -7,6 +7,7 @@ import { addUser } from '../../features/session/sessionSlice'
 import { SessionState } from '../../features/session/sessionSlice'
 
 import { validateUser } from '../../apis/user.api'
+import { Container, CircularProgress } from '@mui/material'
 
 const Home = () => {
 
@@ -24,7 +25,16 @@ const Home = () => {
         navigate('/main')
       })
   }, [])
-  return (<h1>This is the home page</h1>)
+  return (
+    <Container sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      mt: 5
+    }}>
+      <CircularProgress size={200}/>
+    </Container>
+  )
 }
 
 export default Home
