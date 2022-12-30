@@ -21,8 +21,8 @@ const Header = () => {
   const navigate = useNavigate()
   const username = useAppSelector(state => state.session.username)
   const dispatch = useAppDispatch()
-  const sessionState = !username ? 'Login': 'Logout'
-  
+  const sessionState = !username ? 'Login' : 'Logout'
+
   const handleOnClick = async () => {
     if (username) { // <-- ie: is currently logged in but wishes to log out
       await logoutUser()
@@ -33,41 +33,42 @@ const Header = () => {
     navigate('/')
   }
 
-  return(
-    <AppBar 
-      position = 'fixed'
-      sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}
+  return (
+    <AppBar
+      position='fixed'
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar> {/* Applies padding to the left and right and vertically?*/}
-        <SentimentVerySatisfiedOutlinedIcon sx={{mr: 1}} />
-        <Typography 
-          variant='h6' 
-          component={Link} 
+        <SentimentVerySatisfiedOutlinedIcon sx={{ mr: 1 }} />
+        <Typography
+          variant='h6'
+          component={Link}
           to='/'
-          sx={{ 
+          sx={{
             textDecoration: 'none', // removes underline from Link
             color: 'white' // re-colors to white due to being initially anchored
           }}
         >
-          BESTEST-TODOS
+          KEEP-TABS
+          {/* BESTEST-TODOS */}
         </Typography>
-        <Box sx={{flexGrow: 1, display: 'flex'}}>
+        <Box sx={{ flexGrow: 1, display: 'flex' }}>
           {username && <SearchBar />}
         </Box> {/*Pushes logo and button apart*/}
-        {username && 
+        {username &&
           <>
-            <Avatar sx={{backgroundColor: stringToColor(username), mr: 1}}>{username[0].toUpperCase()}</Avatar>
-            <Typography 
-              variant="h6" 
-              component="div" 
-              sx={{mr: 2}}
+            <Avatar sx={{ backgroundColor: stringToColor(username), mr: 1 }}>{username[0].toUpperCase()}</Avatar>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ mr: 2 }}
             >
               {`HI ${username.toUpperCase()}!`}
             </Typography>
           </>
         }
         <Button color='inherit' variant='outlined' onClick={handleOnClick}>
-          { sessionState }          
+          {sessionState}
         </Button>
       </Toolbar>
     </AppBar>

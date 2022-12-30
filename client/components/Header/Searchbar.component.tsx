@@ -17,12 +17,12 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginLeft: theme.spacing(7),
+  marginLeft: theme.spacing(11),
   width: '50%'
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 2, 0, 2),
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
@@ -58,7 +58,7 @@ const SearchBar = () => {
     dispatch(applySearchFilter(''))
   }
 
-  return(
+  return (
     <>
       <Search>
         <SearchIconWrapper>
