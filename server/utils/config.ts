@@ -17,7 +17,7 @@ interface ProcessEnv { // <-- type here, not in types.ts
 
 // --> see union for Fields and NodeJS.ProcessEnv in order to still properly process a modified process.env object with dotenv package
 const config = ({MONGODB_URI, MONGODB_TEST_URI, PORT, SECRET, ENV}: Fields | NodeJS.ProcessEnv): ProcessEnv => {
-  
+
   if (ENV === 'dev') {
     MONGODB_URI = parseGeneric(MONGODB_TEST_URI, 'MONGODB_TEST_URI')
   }
