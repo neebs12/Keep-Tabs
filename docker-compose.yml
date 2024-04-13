@@ -1,7 +1,18 @@
 version: '3.1'
 
 services:
-  mongodb:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongodb_database:27017/?authSource=admin
+      - SECRET=secret
+      - PORT=3000
+    depends_on:
+      - mongodb_database
+
+  mongodb_database:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: root

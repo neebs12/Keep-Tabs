@@ -35,9 +35,7 @@ server.use('/api/users', usersRoute)
 server.use('/api/todos', userExtractor, todosRoute)
 
 // --> has POST route to reset test db
-if (config.ENV === 'dev') {
-  server.use('/api/seed', seedRoute)
-}
+server.use('/api/seed', seedRoute)
 
 // --> this is for invalid requests not related to apis
 server.use('/api', (_req, res) => {
