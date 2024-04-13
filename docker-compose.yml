@@ -10,17 +10,24 @@ services:
       - SECRET=secret
       - PORT=3000
     depends_on:
-      - mongodb_database
+      mongodb_database:
+        condition: service_healthy
 
   mongodb_database:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
+    # no need to expose the port bc its used internally
+    # ports:
+    #   - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u blah -p $MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mongo-data:
