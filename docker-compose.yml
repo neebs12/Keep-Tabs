@@ -4,7 +4,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "4000:3000"
     environment:
       - MONGODB_URI=mongodb://root:example@mongodb_database:27017/?authSource=admin
       - SECRET=secret
@@ -24,9 +24,10 @@ services:
     volumes:
       - mongo-data:/data/db
     healthcheck:
-      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u blah -p $MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
-      interval: 5s
-      timeout: 5s
+      # https://stackoverflow.com/questions/54384042/why-does-the-docker-compose-healthcheck-of-my-mongo-container-always-fail
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 2s
+      timeout: 2s
       retries: 5
 
 volumes:
