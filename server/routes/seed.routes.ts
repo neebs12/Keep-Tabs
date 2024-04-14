@@ -1,6 +1,6 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
-import userModel from '../models/users.model' 
+import userModel from '../models/users.model'
 import todoModel from '../models/todos.model'
 // <-- add more with further development
 
@@ -14,7 +14,7 @@ router.post('/', async (_req, res) => {
   // 1. Clear all entries from test-database
   // 2. Get the users from seed database the users (unhashed)
   // 3. Hash the passwords of the users from the database (hashed)
-  // 4. Assign the todos to users 
+  // 4. Assign the todos to users
   // 5. Insert the todos
 
   await userModel.deleteMany({})
@@ -26,7 +26,7 @@ router.post('/', async (_req, res) => {
   })))
     // this is for checking, typecasting, for .value extraction for TS
     // inspiration: https://stackoverflow.com/questions/63783735/type-error-on-response-of-promise-allsettled
-    .filter(p => p.status === 'fulfilled')          
+    .filter(p => p.status === 'fulfilled')
     .map(p => (p as PromiseFulfilledResult<string>).value)
 
   if (hashedPasswords.length !== seedData.seedUsers.length) {
@@ -46,7 +46,7 @@ router.post('/', async (_req, res) => {
     return {
       ...s,
       userId: getRandAryElm<string>(ids), // <- valid due to gnr fn. nature
-      completed: false
+      completed: Math.random() > 0.75,
     }
   })
 

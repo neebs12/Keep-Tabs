@@ -2,7 +2,7 @@
 > Todo application written in MERN stack under TypeScript.
 > Demo application at: https://bestesttodos.herokuapp.com/
 
-**Learning goals involve:** 
+**Learning goals involve:**
 - Increased proficiency in version control (git)
 - Increased proficiency in TypeScript
 - Increased proficiency in NoSQL databases (mongoose & MongoDB)
@@ -13,8 +13,15 @@
 - Material UI
 
 **Stretch Learning goals involve:**
-- Proper Authentication using Auth0 - https://auth0.com/blog/complete-guide-to-nodejs-express-user-authentication/ 
+- Proper Authentication using Auth0 - https://auth0.com/blog/complete-guide-to-nodejs-express-user-authentication/
 - Or use of passportjs - https://www.passportjs.org/
+___
+## Running
+This is being dockerized. Feel free to run via
+```
+docker compose up --build -d # accessible via localhost:8080
+```
+
 ___
 ## Core features
 - Authentication

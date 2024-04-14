@@ -1,26 +1,39 @@
 version: '3.1'
 
 services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
   app:
     build: .
-    ports:
-      - "3000:3000"
     environment:
       - MONGODB_URI=mongodb://root:example@mongodb_database:27017/?authSource=admin
       - SECRET=secret
       - PORT=3000
     depends_on:
-      - mongodb_database
+      mongodb_database:
+        condition: service_healthy
 
   mongodb_database:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
+    # no need to expose the port bc its used internally
+    # ports:
+    #   - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      # https://stackoverflow.com/questions/54384042/why-does-the-docker-compose-healthcheck-of-my-mongo-container-always-fail
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 2s
+      timeout: 2s
+      retries: 5
 
 volumes:
   mongo-data:

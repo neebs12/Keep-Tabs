@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Mode</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            position: relative; /* Ensures the body can be used for absolute positioning */
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+        p {
+            color: #555;
+            font-size: 16px;
+        }
+        .info {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .ball-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px; /* Adjust this width depending on how spread out you want the balls */
+            display: flex;
+            justify-content: space-between;
+        }
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>We're Updating Our Site</h1>
+        <p>Please bear with us while we perform some necessary upgrades. We'll be back up shortly. Thank you for your patience.💀</p>
+        <p class="info">Expected to be back by <strong>😂!!NEVER EVER!!😂</strong>.</p>
+    </div>
+    <div class="ball-container">
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const container = document.querySelector('.ball-container');
+                const ballIsBouncing = [];
+                for (let i = 0; i < 5; i++) {
+                    let ball = document.createElement('div');
+                    ball.className = 'ball';
+                    ball.onclick = function() {
+                        if (!ballIsBouncing[i]) {
+                            this.style.animation = 'bounce 0.5s infinite';
+                            ballIsBouncing[i] = true;
+                        } else {
+                            this.style.animation = '';
+                            ballIsBouncing[i] = false;
+                        }
+                    };
+                    container.appendChild(ball);
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
