@@ -19,7 +19,7 @@ ___
 ## Running
 This is being dockerized. Feel free to run via
 ```
-docker compose up --build -d # accessible via localhost:80
+docker compose up --build -d # accessible via localhost:8080
 ```
 
 ___

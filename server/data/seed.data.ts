@@ -149,6 +149,7 @@ const seedTodos: SeedTodo[] = [
   }
 ]
 
+// todos have a 25% chance of being completed
 export default {
   seedUsers,
   seedTodos
